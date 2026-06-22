@@ -243,6 +243,16 @@
       outline-offset: 2px;
     }
 
+    .other-topic {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 5px;
+      margin-top: 2px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
     .actions {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -452,6 +462,11 @@
               <input type="checkbox" name="topic" value="איחוד/מיזוג לקוחות">
               <span>איחוד/מיזוג לקוחות<small>בני זוג, משפחות ושיוך מחדש</small></span>
             </label>
+
+            <label class="other-topic">
+              אחר
+              <input type="text" name="other_topic" id="otherTopic" placeholder="כתבו נושא נוסף שמעניין אתכם">
+            </label>
           </div>
         </fieldset>
       </div>
@@ -478,20 +493,25 @@
     const submitButton = document.getElementById("submitButton");
     const submitFrame = document.querySelector("iframe[name='sheetSubmitFrame']");
     const checks = Array.from(document.querySelectorAll("input[name='topic']"));
+    const otherTopic = document.getElementById("otherTopic");
     let submittedToSheet = false;
 
     function updateSelectedTopics() {
       const selected = checks.filter((input) => input.checked).map((input) => input.value);
-      selectedTopicsInput.value = selected.join(", ");
-      selectedTopics.textContent = selected.length
-        ? "נבחרו: " + selected.join(" | ")
+      const other = otherTopic.value.trim();
+      const allTopics = other ? selected.concat("אחר: " + other) : selected;
+      selectedTopicsInput.value = allTopics.join(", ");
+      selectedTopics.textContent = allTopics.length
+        ? "נבחרו: " + allTopics.join(" | ")
         : "לא נבחרו נושאים עדיין";
     }
 
     checks.forEach((input) => input.addEventListener("change", updateSelectedTopics));
+    otherTopic.addEventListener("input", updateSelectedTopics);
 
     form.addEventListener("submit", (event) => {
       const selected = checks.filter((input) => input.checked);
+      const other = otherTopic.value.trim();
 
       if (form.action.includes("GOOGLE_APPS_SCRIPT_WEB_APP_URL")) {
         event.preventDefault();
@@ -499,7 +519,7 @@
         return;
       }
 
-      if (!selected.length) {
+      if (!selected.length && !other) {
         event.preventDefault();
         submitStatus.textContent = "בחרו לפחות נושא אחד.";
         return;
