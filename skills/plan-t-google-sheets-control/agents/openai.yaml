@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan-T Sheet Control"
+  short_description: "Validate Plan-T training control sheets"
+  default_prompt: "Use $plan-t-google-sheets-control to validate the training control sheet contract."

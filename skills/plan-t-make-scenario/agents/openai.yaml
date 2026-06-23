@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan-T Make Scenario"
+  short_description: "Safely maintain the Plan-T Make scenario"
+  default_prompt: "Use $plan-t-make-scenario to safely inspect, back up, import, and verify the Plan-T Make scenario."

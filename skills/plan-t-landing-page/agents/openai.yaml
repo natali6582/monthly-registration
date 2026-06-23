@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan-T Landing Page"
+  short_description: "Maintain the Plan-T registration landing page"
+  default_prompt: "Use $plan-t-landing-page to update and verify the Plan-T registration landing page."

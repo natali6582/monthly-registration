@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan-T Webinar Email"
+  short_description: "Build safe Plan-T webinar email templates"
+  default_prompt: "Use $plan-t-webinar-email to update and validate the Plan-T webinar email template."

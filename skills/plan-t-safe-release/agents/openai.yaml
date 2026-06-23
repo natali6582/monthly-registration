@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan-T Safe Release"
+  short_description: "Release Plan-T changes with safety checks"
+  default_prompt: "Use $plan-t-safe-release to validate, commit, and release Plan-T changes safely."

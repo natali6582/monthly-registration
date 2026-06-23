@@ -1,0 +1,48 @@
+{
+  "id": 5458320,
+  "name": "הרשמה ל הדרכה (נטלי)",
+  "teamId": 1621766,
+  "hookId": 2486199,
+  "devices": [],
+  "deviceId": null,
+  "deviceScope": null,
+  "concept": false,
+  "description": "",
+  "folderId": null,
+  "slots": null,
+  "isinvalid": true,
+  "islinked": false,
+  "islocked": false,
+  "isPaused": false,
+  "usedPackages": [
+    "gateway",
+    "google-sheets",
+    "google-sheets",
+    "util",
+    "util",
+    "microsoft-email"
+  ],
+  "lastEdit": "2026-06-22T11:44:12.851Z",
+  "scheduling": {
+    "type": "immediately"
+  },
+  "iswaiting": false,
+  "dlqCount": 0,
+  "allDlqCount": 0,
+  "createdByUser": {
+    "id": 6100228,
+    "name": "PLAN-T",
+    "email": "plant3576@gmail.com"
+  },
+  "updatedByUser": {
+    "id": 6100228,
+    "name": "PLAN-T",
+    "email": "plant3576@gmail.com"
+  },
+  "nextExec": null,
+  "created": "2026-06-22T09:35:34.504Z",
+  "chainingRole": "none",
+  "type": "scenario",
+  "isShared": false,
+  "isActive": false
+}
