@@ -85,7 +85,7 @@ export const submitRegistration = webMethod(Permissions.Anyone, async (form) => 
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'x-api-key': apiKey
+      'x-make-apikey': apiKey
     },
     body: encodeForm(payload)
   });
