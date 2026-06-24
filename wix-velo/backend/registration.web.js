@@ -52,33 +52,16 @@ function normalizeRegistration(form) {
 }
 
 async function getRequiredSecret(name) {
-  const secret = await elevatedGetSecretValue(name);
-  const value = cleanText(
-    typeof secret === 'string' ? secret : secret?.value,
-    2000
-  );
-
+  const value = cleanText(await elevatedGetSecretValue(name), 2000);
   if (!value) {
     throw new Error(`${name} is missing`);
   }
-
   return value;
-}
-
-function requireAbsoluteHttpsUrl(url, name) {
-  if (!/^https:\/\//i.test(url)) {
-    throw new Error(`${name} must be a full https:// URL`);
-  }
-
-  return url;
 }
 
 export const submitRegistration = webMethod(Permissions.Anyone, async (form) => {
   const payload = normalizeRegistration(form);
-  const webhookUrl = requireAbsoluteHttpsUrl(
-    await getRequiredSecret(SECRET_WEBHOOK_URL),
-    SECRET_WEBHOOK_URL
-  );
+  const webhookUrl = await getRequiredSecret(SECRET_WEBHOOK_URL);
   const apiKey = await getRequiredSecret(SECRET_API_KEY);
 
   const response = await fetch(webhookUrl, {
