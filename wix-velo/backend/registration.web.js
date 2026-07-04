@@ -34,17 +34,21 @@ function encodeForm(payload) {
 function normalizeRegistration(form) {
   const payload = {
     name: cleanText(form?.name, 120),
+    role: cleanText(form?.role, 120),
     company: cleanText(form?.company, 160),
     email: cleanText(form?.email, 180).toLowerCase(),
     phone: cleanText(form?.phone, 60),
+    training_focus: cleanText(form?.training_focus, 1000),
     selected_topics: cleanText(form?.selected_topics, 1000),
     source: SOURCE
   };
 
   assertField('name', payload.name);
+  assertField('role', payload.role);
   assertField('company', payload.company);
   assertField('email', payload.email);
   assertField('phone', payload.phone);
+  assertField('training_focus', payload.training_focus);
   assertField('selected_topics', payload.selected_topics);
   assertEmail(payload.email);
 
