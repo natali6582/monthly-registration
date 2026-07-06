@@ -211,6 +211,56 @@
       line-height: 1.35;
     }
 
+    .success-screen {
+      display: none;
+      min-height: 310px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .success-screen.is-visible {
+      display: flex;
+    }
+
+    .success-content {
+      display: grid;
+      max-width: 560px;
+      gap: 16px;
+      justify-items: center;
+      margin: 0 auto;
+      color: var(--text-dark);
+    }
+
+    .success-mark {
+      display: flex;
+      width: 68px;
+      height: 68px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--color-blue), var(--color-green));
+      box-shadow: 0 8px 20px rgba(157, 195, 230, .35);
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .success-content h2 {
+      color: var(--text-dark);
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .success-content p {
+      color: var(--text-light);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
     .submit-btn {
       display: flex;
       width: 100%;
@@ -357,6 +407,14 @@
           </svg>
         </button>
       </form>
+
+      <section class="success-screen" id="successScreen" aria-live="polite" tabindex="-1">
+        <div class="success-content">
+          <div class="success-mark" aria-hidden="true">✓</div>
+          <h2>ההרשמה הושלמה</h2>
+          <p>תודה, הפרטים נקלטו בהצלחה. זימון להדרכה יישלח אליך בדקות הקרובות.</p>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -364,11 +422,18 @@
     const form = document.getElementById('registrationForm');
     const statusBox = document.getElementById('status');
     const submitButton = document.getElementById('submitButton');
+    const successScreen = document.getElementById('successScreen');
     const fixedTopicValue = 'נושא ההדרכה נקבע על ידי החברה';
 
     function setSending(isSending) {
       submitButton.disabled = isSending;
       statusBox.textContent = isSending ? 'שולח...' : '';
+    }
+
+    function showSuccessScreen() {
+      form.hidden = true;
+      successScreen.classList.add('is-visible');
+      successScreen.focus();
     }
 
     form.addEventListener('submit', (event) => {
@@ -411,7 +476,8 @@
 
       if (message.status === 'success') {
         form.reset();
-        statusBox.textContent = 'ההרשמה נשלחה.';
+        statusBox.textContent = '';
+        showSuccessScreen();
         return;
       }
 
