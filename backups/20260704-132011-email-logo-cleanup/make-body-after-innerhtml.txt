@@ -1,0 +1,14 @@
+&lt;div style="text-align:center;margin:0 0 18px 0;"&gt;&lt;img src="https://natali6582.github.io/monthly-registration/assets/plan-t-logo.jpg" alt="Plan-T Smart Financial Platform" style="display:block;width:96px;max-width:96px;height:auto;margin:0 auto;"&gt;&lt;/div&gt;&lt;div dir="rtl" style="font-family: Arial, sans-serif; line-height: 1.7; color: #10142B; text-align: right; background-color: #ffffff; padding: 24px;"&gt;
+    &lt;p style="margin: 0 0 18px 0;"&gt;שלום <imt-pill class="variable unknown" name="1.name" prefix="1. " level="0" type="text" style="color: rgb(255, 255, 255); background-color: rgb(199, 58, 99); box-shadow: rgb(199, 58, 99) 0px 0px 0px 1px inset;" draggable="true" contenteditable="false">name</imt-pill>,&lt;/p&gt;
+
+    &lt;p style="margin: 0 0 18px 0;"&gt;אנו שמחים שנרשמתם להדרכה מקצועית וממוקדת בנושאים נבחרים.&lt;/p&gt;
+
+    &lt;p style="margin: 0 0 18px 0;"&gt;במהלך ההדרכה נציג דוגמאות חיות, כדי שתוכלו ליישם את הכלים בקלות בעבודה השוטפת.&lt;/p&gt;
+
+    &lt;p style="margin: 0 0 18px 0;"&gt;קישור הכניסה להדרכה יישלח אליך בהמשך. לשאלות ניתן לפנות לכתובת: &lt;a href="mailto:supportclient@plan-t.org.il" style="color: #006BA6; font-weight: 700; text-decoration: none;"&gt;supportclient@plan-t.org.il&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p style="margin: 0 0 18px 0;"&gt;נשמח לראותכם,&lt;/p&gt;
+
+    &lt;p style="margin: 0 0 6px 0;"&gt;&lt;strong&gt;צוות Plan-T&lt;/strong&gt;&lt;/p&gt;
+    &lt;p style="margin: 0; font-weight: 700;"&gt;PLAN-T Smart Financial Platform&lt;/p&gt;
+&lt;/div&gt;

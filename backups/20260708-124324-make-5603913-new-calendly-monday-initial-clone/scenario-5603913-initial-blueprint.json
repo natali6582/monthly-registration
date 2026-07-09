@@ -1,0 +1,1302 @@
+﻿{
+    "flow":  [
+                 {
+                     "id":  1,
+                     "mapper":  {
+
+                                },
+                     "module":  "calendly:watchInvitees",
+                     "version":  2,
+                     "metadata":  {
+                                      "restore":  {
+                                                      "parameters":  {
+                                                                         "__IMTHOOK__":  {
+                                                                                             "data":  {
+                                                                                                          "editable":  "false"
+                                                                                                      },
+                                                                                             "label":  "My Calendly Event webhook"
+                                                                                         }
+                                                                     }
+                                                  },
+                                      "designer":  {
+                                                       "x":  -21,
+                                                       "y":  15
+                                                   },
+                                      "parameters":  [
+                                                         {
+                                                             "name":  "__IMTHOOK__",
+                                                             "type":  "hook:calendly4",
+                                                             "label":  "Webhook",
+                                                             "required":  true
+                                                         }
+                                                     ]
+                                  },
+                     "parameters":  {
+                                        "__IMTHOOK__":  2512413
+                                    }
+                 },
+                 {
+                     "id":  2,
+                     "mapper":  {
+                                    "from":  "drive",
+                                    "mode":  "select",
+                                    "values":  {
+                                                   "0":  "{{1.name}}",
+                                                   "1":  "{{1.questions_and_answers[1].answer}}",
+                                                   "2":  "{{1.email}}",
+                                                   "3":  "{{1.questions_and_answers[2].answer}}",
+                                                   "5":  "{{1.scheduled_event.start_time}}",
+                                                   "6":  "{{1.updated_at}}"
+                                               },
+                                    "sheetId":  "יצירת קשר - לידים",
+                                    "spreadsheetId":  "/1KVnCH206v5Bq4LT-cuTncBrvJwD5TcV1_zQwP2sOkeE",
+                                    "includesHeaders":  true,
+                                    "insertDataOption":  "INSERT_ROWS",
+                                    "useColumnHeaders":  false,
+                                    "valueInputOption":  "RAW",
+                                    "insertUnformatted":  false
+                                },
+                     "module":  "google-sheets:addRow",
+                     "version":  2,
+                     "metadata":  {
+                                      "expect":  [
+                                                     {
+                                                         "name":  "mode",
+                                                         "type":  "select",
+                                                         "label":  "Search Method",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "select",
+                                                                                       "fromAll",
+                                                                                       "map"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "insertUnformatted",
+                                                         "type":  "boolean",
+                                                         "label":  "Unformatted",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "valueInputOption",
+                                                         "type":  "select",
+                                                         "label":  "Value input option",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "USER_ENTERED",
+                                                                                       "RAW"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "insertDataOption",
+                                                         "type":  "select",
+                                                         "label":  "Insert data option",
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "INSERT_ROWS",
+                                                                                       "OVERWRITE"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "from",
+                                                         "type":  "select",
+                                                         "label":  "Drive",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "drive",
+                                                                                       "share",
+                                                                                       "team"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "spreadsheetId",
+                                                         "type":  "file",
+                                                         "label":  "Spreadsheet Name",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "sheetId",
+                                                         "type":  "select",
+                                                         "label":  "Sheet Name",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "includesHeaders",
+                                                         "type":  "select",
+                                                         "label":  "Table contains headers",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       true,
+                                                                                       false
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "useColumnHeaders",
+                                                         "type":  "select",
+                                                         "label":  "Use column headers as IDs of the columns",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       true,
+                                                                                       false
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "values",
+                                                         "spec":  [
+                                                                      {
+                                                                          "name":  "0",
+                                                                          "type":  "text",
+                                                                          "label":  "שם (A)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "1",
+                                                                          "type":  "text",
+                                                                          "label":  "טלפון  (B)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "2",
+                                                                          "type":  "text",
+                                                                          "label":  "מייל (C)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "3",
+                                                                          "type":  "text",
+                                                                          "label":  "שם משרד (D)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "4",
+                                                                          "type":  "text",
+                                                                          "label":  "סטטוס (E)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "5",
+                                                                          "type":  "text",
+                                                                          "label":  "הערות (F)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "6",
+                                                                          "type":  "text",
+                                                                          "label":  "תאריך פנייה (G)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "7",
+                                                                          "type":  "text",
+                                                                          "label":  "Column 4 (H)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "8",
+                                                                          "type":  "text",
+                                                                          "label":  "(I)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "9",
+                                                                          "type":  "text",
+                                                                          "label":  "(J)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "10",
+                                                                          "type":  "text",
+                                                                          "label":  "(K)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "11",
+                                                                          "type":  "text",
+                                                                          "label":  "(L)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "12",
+                                                                          "type":  "text",
+                                                                          "label":  "(M)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "13",
+                                                                          "type":  "text",
+                                                                          "label":  "(N)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "14",
+                                                                          "type":  "text",
+                                                                          "label":  "(O)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "15",
+                                                                          "type":  "text",
+                                                                          "label":  "(P)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "16",
+                                                                          "type":  "text",
+                                                                          "label":  "(Q)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "17",
+                                                                          "type":  "text",
+                                                                          "label":  "(R)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "18",
+                                                                          "type":  "text",
+                                                                          "label":  "(S)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "19",
+                                                                          "type":  "text",
+                                                                          "label":  "(T)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "20",
+                                                                          "type":  "text",
+                                                                          "label":  "(U)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "21",
+                                                                          "type":  "text",
+                                                                          "label":  "(V)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "22",
+                                                                          "type":  "text",
+                                                                          "label":  "(W)"
+                                                                      },
+                                                                      {
+                                                                          "name":  "23",
+                                                                          "type":  "text",
+                                                                          "label":  "0523321424 (X)"
+                                                                      }
+                                                                  ],
+                                                         "type":  "collection",
+                                                         "label":  "Values in columns",
+                                                         "metadata":  [
+                                                                          [
+                                                                              [
+                                                                                  "שם",
+                                                                                  "טלפון ",
+                                                                                  "מייל",
+                                                                                  "שם משרד",
+                                                                                  "סטטוס",
+                                                                                  "הערות",
+                                                                                  "תאריך פנייה",
+                                                                                  "Column 4",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "",
+                                                                                  "0523321424"
+                                                                              ]
+                                                                          ]
+                                                                      ]
+                                                     }
+                                                 ],
+                                      "restore":  {
+                                                      "expect":  {
+                                                                     "from":  {
+                                                                                  "label":  "My Drive"
+                                                                              },
+                                                                     "mode":  {
+                                                                                  "label":  "Search by path"
+                                                                              },
+                                                                     "sheetId":  {
+                                                                                     "label":  "יצירת קשר - לידים"
+                                                                                 },
+                                                                     "spreadsheetId":  {
+                                                                                           "path":  [
+                                                                                                        "טופס תמיכה טכנית/מכירות מהאתר"
+                                                                                                    ]
+                                                                                       },
+                                                                     "includesHeaders":  {
+                                                                                             "label":  "Yes"
+                                                                                         },
+                                                                     "insertDataOption":  {
+                                                                                              "mode":  "chose",
+                                                                                              "label":  "Insert rows"
+                                                                                          },
+                                                                     "useColumnHeaders":  {
+                                                                                              "label":  "No",
+                                                                                              "nested":  [
+                                                                                                             {
+                                                                                                                 "name":  "values",
+                                                                                                                 "spec":  [
+                                                                                                                              {
+                                                                                                                                  "name":  "0",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "שם (A)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "1",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "טלפון  (B)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "2",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "מייל (C)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "3",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "שם משרד (D)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "4",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "סטטוס (E)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "5",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "הערות (F)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "6",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "תאריך פנייה (G)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "7",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "Column 4 (H)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "8",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(I)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "9",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(J)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "10",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(K)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "11",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(L)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "12",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(M)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "13",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(N)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "14",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(O)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "15",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(P)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "16",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(Q)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "17",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(R)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "18",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(S)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "19",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(T)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "20",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(U)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "21",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(V)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "22",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "(W)"
+                                                                                                                              },
+                                                                                                                              {
+                                                                                                                                  "name":  "23",
+                                                                                                                                  "type":  "text",
+                                                                                                                                  "label":  "0523321424 (X)"
+                                                                                                                              }
+                                                                                                                          ],
+                                                                                                                 "type":  "collection",
+                                                                                                                 "label":  "Values in columns",
+                                                                                                                 "metadata":  [
+                                                                                                                                  [
+                                                                                                                                      [
+                                                                                                                                          "שם",
+                                                                                                                                          "טלפון ",
+                                                                                                                                          "מייל",
+                                                                                                                                          "שם משרד",
+                                                                                                                                          "סטטוס",
+                                                                                                                                          "הערות",
+                                                                                                                                          "תאריך פנייה",
+                                                                                                                                          "Column 4",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "",
+                                                                                                                                          "0523321424"
+                                                                                                                                      ]
+                                                                                                                                  ]
+                                                                                                                              ]
+                                                                                                             }
+                                                                                                         ]
+                                                                                          },
+                                                                     "valueInputOption":  {
+                                                                                              "mode":  "chose",
+                                                                                              "label":  "Raw"
+                                                                                          },
+                                                                     "insertUnformatted":  {
+                                                                                               "mode":  "chose"
+                                                                                           }
+                                                                 },
+                                                      "parameters":  {
+                                                                         "__IMTCONN__":  {
+                                                                                             "data":  {
+                                                                                                          "scoped":  "true",
+                                                                                                          "connection":  "google"
+                                                                                                      },
+                                                                                             "label":  "My Google connection (plant3576@gmail.com)"
+                                                                                         }
+                                                                     }
+                                                  },
+                                      "advanced":  true,
+                                      "designer":  {
+                                                       "x":  285,
+                                                       "y":  13
+                                                   },
+                                      "parameters":  [
+                                                         {
+                                                             "name":  "__IMTCONN__",
+                                                             "type":  "account:google",
+                                                             "label":  "Connection",
+                                                             "required":  true
+                                                         }
+                                                     ]
+                                  },
+                     "parameters":  {
+                                        "__IMTCONN__":  6487876
+                                    }
+                 },
+                 {
+                     "id":  16,
+                     "mapper":  {
+                                    "name":  "var1",
+                                    "scope":  "roundtrip",
+                                    "value":  "{{1.questions_and_answers[1].answer}}"
+                                },
+                     "module":  "util:SetVariable2",
+                     "version":  1,
+                     "metadata":  {
+                                      "expect":  [
+                                                     {
+                                                         "name":  "name",
+                                                         "type":  "text",
+                                                         "label":  "Variable name",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "scope",
+                                                         "type":  "select",
+                                                         "label":  "Variable lifetime",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "roundtrip",
+                                                                                       "execution"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "value",
+                                                         "type":  "any",
+                                                         "label":  "Variable value"
+                                                     }
+                                                 ],
+                                      "restore":  {
+                                                      "expect":  {
+                                                                     "scope":  {
+                                                                                   "label":  "One cycle"
+                                                                               }
+                                                                 }
+                                                  },
+                                      "designer":  {
+                                                       "x":  594,
+                                                       "y":  8
+                                                   },
+                                      "interface":  [
+                                                        {
+                                                            "name":  "var1",
+                                                            "type":  "any",
+                                                            "label":  "var1"
+                                                        }
+                                                    ]
+                                  },
+                     "parameters":  {
+
+                                    }
+                 },
+                 {
+                     "id":  17,
+                     "mapper":  {
+                                    "name":  "noSpaces",
+                                    "scope":  "roundtrip",
+                                    "value":  "{{replace(toString(16.var1); \"-\"; \"\")}}"
+                                },
+                     "module":  "util:SetVariable2",
+                     "version":  1,
+                     "metadata":  {
+                                      "expect":  [
+                                                     {
+                                                         "name":  "name",
+                                                         "type":  "text",
+                                                         "label":  "Variable name",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "scope",
+                                                         "type":  "select",
+                                                         "label":  "Variable lifetime",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "roundtrip",
+                                                                                       "execution"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "value",
+                                                         "type":  "any",
+                                                         "label":  "Variable value"
+                                                     }
+                                                 ],
+                                      "restore":  {
+                                                      "expect":  {
+                                                                     "scope":  {
+                                                                                   "label":  "One cycle"
+                                                                               }
+                                                                 }
+                                                  },
+                                      "designer":  {
+                                                       "x":  851,
+                                                       "y":  2
+                                                   },
+                                      "interface":  [
+                                                        {
+                                                            "name":  "noSpaces",
+                                                            "type":  "any",
+                                                            "label":  "noSpaces"
+                                                        }
+                                                    ]
+                                  },
+                     "parameters":  {
+
+                                    }
+                 },
+                 {
+                     "id":  18,
+                     "mapper":  {
+                                    "name":  "toPhone",
+                                    "scope":  "roundtrip",
+                                    "value":  "{{replace(17.noSpaces; 972; \"\")}}"
+                                },
+                     "module":  "util:SetVariable2",
+                     "version":  1,
+                     "metadata":  {
+                                      "expect":  [
+                                                     {
+                                                         "name":  "name",
+                                                         "type":  "text",
+                                                         "label":  "Variable name",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "scope",
+                                                         "type":  "select",
+                                                         "label":  "Variable lifetime",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "roundtrip",
+                                                                                       "execution"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "value",
+                                                         "type":  "any",
+                                                         "label":  "Variable value"
+                                                     }
+                                                 ],
+                                      "restore":  {
+                                                      "expect":  {
+                                                                     "scope":  {
+                                                                                   "label":  "One cycle"
+                                                                               }
+                                                                 }
+                                                  },
+                                      "designer":  {
+                                                       "x":  1079,
+                                                       "y":  22
+                                                   },
+                                      "interface":  [
+                                                        {
+                                                            "name":  "toPhone",
+                                                            "type":  "any",
+                                                            "label":  "toPhone"
+                                                        }
+                                                    ]
+                                  },
+                     "parameters":  {
+
+                                    }
+                 },
+                 {
+                     "id":  19,
+                     "mapper":  {
+                                    "name":  "toPhoneWithoutPlus",
+                                    "scope":  "roundtrip",
+                                    "value":  "{{replace(18.toPhone; \"+\"; \"\")}}"
+                                },
+                     "module":  "util:SetVariable2",
+                     "version":  1,
+                     "metadata":  {
+                                      "expect":  [
+                                                     {
+                                                         "name":  "name",
+                                                         "type":  "text",
+                                                         "label":  "Variable name",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "scope",
+                                                         "type":  "select",
+                                                         "label":  "Variable lifetime",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "roundtrip",
+                                                                                       "execution"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "value",
+                                                         "type":  "any",
+                                                         "label":  "Variable value"
+                                                     }
+                                                 ],
+                                      "restore":  {
+                                                      "expect":  {
+                                                                     "scope":  {
+                                                                                   "label":  "One cycle"
+                                                                               }
+                                                                 }
+                                                  },
+                                      "designer":  {
+                                                       "x":  1287,
+                                                       "y":  24
+                                                   },
+                                      "interface":  [
+                                                        {
+                                                            "name":  "toPhoneWithoutPlus",
+                                                            "type":  "any",
+                                                            "label":  "toPhoneWithoutPlus"
+                                                        }
+                                                    ]
+                                  },
+                     "parameters":  {
+
+                                    }
+                 },
+                 {
+                     "id":  20,
+                     "mapper":  {
+                                    "name":  "lastVar",
+                                    "scope":  "roundtrip",
+                                    "value":  "{{trim(19.toPhoneWithoutPlus)}}"
+                                },
+                     "module":  "util:SetVariable2",
+                     "version":  1,
+                     "metadata":  {
+                                      "expect":  [
+                                                     {
+                                                         "name":  "name",
+                                                         "type":  "text",
+                                                         "label":  "Variable name",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "scope",
+                                                         "type":  "select",
+                                                         "label":  "Variable lifetime",
+                                                         "required":  true,
+                                                         "validate":  {
+                                                                          "enum":  [
+                                                                                       "roundtrip",
+                                                                                       "execution"
+                                                                                   ]
+                                                                      }
+                                                     },
+                                                     {
+                                                         "name":  "value",
+                                                         "type":  "any",
+                                                         "label":  "Variable value"
+                                                     }
+                                                 ],
+                                      "restore":  {
+                                                      "expect":  {
+                                                                     "scope":  {
+                                                                                   "label":  "One cycle"
+                                                                               }
+                                                                 }
+                                                  },
+                                      "designer":  {
+                                                       "x":  1516,
+                                                       "y":  25
+                                                   },
+                                      "interface":  [
+                                                        {
+                                                            "name":  "lastVar",
+                                                            "type":  "any",
+                                                            "label":  "lastVar"
+                                                        }
+                                                    ]
+                                  },
+                     "parameters":  {
+
+                                    }
+                 },
+                 {
+                     "id":  3,
+                     "mapper":  {
+                                    "name":  "{{1.name}}",
+                                    "boardId":  "1988799743",
+                                    "groupId":  "topics",
+                                    "columnIds":  [
+                                                      "lead_email",
+                                                      "board_relation_mksmnkrr",
+                                                      "lead_phone",
+                                                      "lead_status",
+                                                      "date_mksm3h1t",
+                                                      "text_mkws3new",
+                                                      "date_mkwry2yv"
+                                                  ],
+                                    "columnValues":  {
+                                                         "lead_email":  {
+                                                                            "text":  "{{1.email}}",
+                                                                            "email":  "{{1.email}}"
+                                                                        },
+                                                         "lead_phone":  {
+                                                                            "phone":  "{{20.lastVar}}",
+                                                                            "countryShortName":  "IL"
+                                                                        },
+                                                         "lead_status":  {
+                                                                             "index":  "0",
+                                                                             "label":  "ליד חדש"
+                                                                         },
+                                                         "date_mksm3h1t":  {
+                                                                               "datetime":  "{{1.scheduled_event.end_time}}",
+                                                                               "dateOrDatetime":  "datetime"
+                                                                           },
+                                                         "date_mkwry2yv":  {
+                                                                               "datetime":  "{{1.scheduled_event.updated_at}}",
+                                                                               "dateOrDatetime":  "datetime"
+                                                                           },
+                                                         "text_mkws3new":  "{{1.questions_and_answers[2].answer}}",
+                                                         "board_relation_mksmnkrr":  {
+                                                                                         "item_ids":  [
+
+                                                                                                      ]
+                                                                                     }
+                                                     },
+                                    "create_labels_if_missing":  true
+                                },
+                     "module":  "monday:createItem2",
+                     "version":  1,
+                     "metadata":  {
+                                      "expect":  [
+                                                     {
+                                                         "name":  "name",
+                                                         "type":  "text",
+                                                         "label":  "Item Name",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "boardId",
+                                                         "type":  "select",
+                                                         "label":  "Board",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "create_labels_if_missing",
+                                                         "type":  "boolean",
+                                                         "label":  "Create Labels if Missing",
+                                                         "required":  true
+                                                     },
+                                                     {
+                                                         "name":  "groupId",
+                                                         "type":  "select",
+                                                         "label":  "Group"
+                                                     },
+                                                     {
+                                                         "name":  "columnIds",
+                                                         "type":  "select",
+                                                         "label":  "Columns",
+                                                         "multiple":  true
+                                                     },
+                                                     {
+                                                         "name":  "columnValues",
+                                                         "spec":  [
+                                                                      {
+                                                                          "name":  "lead_email",
+                                                                          "spec":  [
+                                                                                       {
+                                                                                           "name":  "email",
+                                                                                           "type":  "email",
+                                                                                           "label":  "Email"
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "text",
+                                                                                           "type":  "text",
+                                                                                           "label":  "Text"
+                                                                                       }
+                                                                                   ],
+                                                                          "type":  "collection",
+                                                                          "label":  "Email",
+                                                                          "metadata":  {
+                                                                                           "mondayType":  "email"
+                                                                                       }
+                                                                      },
+                                                                      {
+                                                                          "name":  "board_relation_mksmnkrr",
+                                                                          "spec":  [
+                                                                                       {
+                                                                                           "name":  "item_ids",
+                                                                                           "spec":  {
+                                                                                                        "rpc":  {
+                                                                                                                    "url":  "rpc://monday/1/idFinderItem?boardIds=1988799743",
+                                                                                                                    "label":  "ID Finder",
+                                                                                                                    "parameters":  [
+                                                                                                                                       {
+                                                                                                                                           "text":  "If you don\u0027t see the result you\u0027re looking for, try more specific search criteria.",
+                                                                                                                                           "type":  "banner",
+                                                                                                                                           "theme":  "info"
+                                                                                                                                       },
+                                                                                                                                       {
+                                                                                                                                           "name":  "query",
+                                                                                                                                           "type":  "text",
+                                                                                                                                           "label":  "Item name contains"
+                                                                                                                                       }
+                                                                                                                                   ]
+                                                                                                                },
+                                                                                                        "name":  "value",
+                                                                                                        "type":  "uinteger",
+                                                                                                        "label":  "Item ID",
+                                                                                                        "required":  true
+                                                                                                    },
+                                                                                           "type":  "array",
+                                                                                           "label":  "Item IDs"
+                                                                                       }
+                                                                                   ],
+                                                                          "type":  "collection",
+                                                                          "label":  "Leads",
+                                                                          "metadata":  {
+                                                                                           "mondayType":  "board_relation"
+                                                                                       }
+                                                                      },
+                                                                      {
+                                                                          "name":  "lead_phone",
+                                                                          "spec":  [
+                                                                                       {
+                                                                                           "name":  "phone",
+                                                                                           "type":  "text",
+                                                                                           "label":  "Phone Number"
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "countryShortName",
+                                                                                           "type":  "text",
+                                                                                           "label":  "Country Short Name",
+                                                                                           "validate":  {
+                                                                                                            "max":  2,
+                                                                                                            "min":  2
+                                                                                                        }
+                                                                                       }
+                                                                                   ],
+                                                                          "type":  "collection",
+                                                                          "label":  "Phone",
+                                                                          "metadata":  {
+                                                                                           "mondayType":  "phone"
+                                                                                       }
+                                                                      },
+                                                                      {
+                                                                          "name":  "lead_status",
+                                                                          "spec":  [
+                                                                                       {
+                                                                                           "name":  "index",
+                                                                                           "type":  "select",
+                                                                                           "label":  "Index"
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "label",
+                                                                                           "type":  "select",
+                                                                                           "label":  "Label"
+                                                                                       }
+                                                                                   ],
+                                                                          "type":  "collection",
+                                                                          "label":  "Status",
+                                                                          "metadata":  {
+                                                                                           "mondayType":  "status"
+                                                                                       }
+                                                                      },
+                                                                      {
+                                                                          "name":  "date_mksm3h1t",
+                                                                          "spec":  [
+                                                                                       {
+                                                                                           "name":  "dateOrDatetime",
+                                                                                           "type":  "select",
+                                                                                           "label":  "Date / Datetime",
+                                                                                           "validate":  {
+                                                                                                            "enum":  [
+                                                                                                                         "date",
+                                                                                                                         "datetime"
+                                                                                                                     ]
+                                                                                                        }
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "datetime",
+                                                                                           "type":  "date",
+                                                                                           "label":  "Date and time",
+                                                                                           "required":  true
+                                                                                       }
+                                                                                   ],
+                                                                          "type":  "collection",
+                                                                          "label":  "מועד פגישת מכירה",
+                                                                          "metadata":  {
+                                                                                           "mondayType":  "date"
+                                                                                       }
+                                                                      },
+                                                                      {
+                                                                          "name":  "text_mkws3new",
+                                                                          "type":  "text",
+                                                                          "label":  "שם המעסיק",
+                                                                          "metadata":  {
+                                                                                           "mondayType":  "text"
+                                                                                       }
+                                                                      },
+                                                                      {
+                                                                          "name":  "date_mkwry2yv",
+                                                                          "spec":  [
+                                                                                       {
+                                                                                           "name":  "dateOrDatetime",
+                                                                                           "type":  "select",
+                                                                                           "label":  "Date / Datetime",
+                                                                                           "validate":  {
+                                                                                                            "enum":  [
+                                                                                                                         "date",
+                                                                                                                         "datetime"
+                                                                                                                     ]
+                                                                                                        }
+                                                                                       },
+                                                                                       {
+                                                                                           "name":  "datetime",
+                                                                                           "type":  "date",
+                                                                                           "label":  "Date and time",
+                                                                                           "required":  true
+                                                                                       }
+                                                                                   ],
+                                                                          "type":  "collection",
+                                                                          "label":  "תאריך פתיחת הליד",
+                                                                          "metadata":  {
+                                                                                           "mondayType":  "date"
+                                                                                       }
+                                                                      }
+                                                                  ],
+                                                         "type":  "collection",
+                                                         "label":  "Column Values"
+                                                     }
+                                                 ],
+                                      "restore":  {
+                                                      "expect":  {
+                                                                     "boardId":  {
+                                                                                     "label":  "Leads  ::  public"
+                                                                                 },
+                                                                     "groupId":  {
+                                                                                     "mode":  "chose",
+                                                                                     "label":  "New Leads"
+                                                                                 },
+                                                                     "columnIds":  {
+                                                                                       "label":  [
+                                                                                                     "lead_email",
+                                                                                                     "board_relation_mksmnkrr",
+                                                                                                     "lead_phone",
+                                                                                                     "lead_status",
+                                                                                                     "date_mksm3h1t",
+                                                                                                     "text_mkws3new",
+                                                                                                     "date_mkwry2yv"
+                                                                                                 ]
+                                                                                   },
+                                                                     "columnValues":  {
+                                                                                          "nested":  {
+                                                                                                         "lead_status":  {
+                                                                                                                             "nested":  {
+                                                                                                                                            "index":  {
+                                                                                                                                                          "mode":  "chose",
+                                                                                                                                                          "label":  "ליד חדש"
+                                                                                                                                                      },
+                                                                                                                                            "label":  {
+                                                                                                                                                          "mode":  "chose",
+                                                                                                                                                          "label":  "ליד חדש"
+                                                                                                                                                      }
+                                                                                                                                        }
+                                                                                                                         },
+                                                                                                         "date_mksm3h1t":  {
+                                                                                                                               "nested":  {
+                                                                                                                                              "dateOrDatetime":  {
+                                                                                                                                                                     "label":  "Date and time"
+                                                                                                                                                                 }
+                                                                                                                                          }
+                                                                                                                           },
+                                                                                                         "date_mkwry2yv":  {
+                                                                                                                               "nested":  {
+                                                                                                                                              "dateOrDatetime":  {
+                                                                                                                                                                     "label":  "Date and time"
+                                                                                                                                                                 }
+                                                                                                                                          }
+                                                                                                                           },
+                                                                                                         "board_relation_mksmnkrr":  {
+                                                                                                                                         "nested":  {
+                                                                                                                                                        "item_ids":  {
+                                                                                                                                                                         "mode":  "chose"
+                                                                                                                                                                     }
+                                                                                                                                                    }
+                                                                                                                                     }
+                                                                                                     }
+                                                                                      }
+                                                                 },
+                                                      "parameters":  {
+                                                                         "__IMTCONN__":  {
+                                                                                             "data":  {
+                                                                                                          "scoped":  "true",
+                                                                                                          "connection":  "monday"
+                                                                                                      },
+                                                                                             "label":  "Monday connection (plan-t-company - Mor Refael)"
+                                                                                         }
+                                                                     }
+                                                  },
+                                      "designer":  {
+                                                       "x":  1822,
+                                                       "y":  31
+                                                   },
+                                      "parameters":  [
+                                                         {
+                                                             "name":  "__IMTCONN__",
+                                                             "type":  "account:monday",
+                                                             "label":  "Connection",
+                                                             "required":  true
+                                                         }
+                                                     ]
+                                  },
+                     "parameters":  {
+                                        "__IMTCONN__":  8130744
+                                    }
+                 }
+             ],
+    "name":  "Calendly -\u003e עדכון תאריך הדרכה במנדיי",
+    "metadata":  {
+                     "instant":  true,
+                     "version":  1,
+                     "designer":  {
+                                      "orphans":  [
+
+                                                  ],
+                                      "samples":  {
+                                                      "1":  {
+                                                                "uri":  "https://api.calendly.com/scheduled_events/18f855c9-823f-4126-9d35-abeadb1f039d/invitees/eaee99e3-54b...",
+                                                                "name":  "זיו בדיקה 4",
+                                                                "email":  "ziv@plant.co.il",
+                                                                "event":  "https://api.calendly.com/scheduled_events/18f855c9-823f-4126-9d35-abeadb1f039d",
+                                                                "status":  "active",
+                                                                "no_show":  null,
+                                                                "payment":  null,
+                                                                "timezone":  "Asia/Jerusalem",
+                                                                "tracking":  {
+                                                                                 "utm_term":  null,
+                                                                                 "utm_medium":  null,
+                                                                                 "utm_source":  null,
+                                                                                 "utm_content":  null,
+                                                                                 "utm_campaign":  null,
+                                                                                 "salesforce_uuid":  null
+                                                                             },
+                                                                "last_name":  null,
+                                                                "cancel_url":  "https://calendly.com/cancellations/eaee99e3-54b0-4acf-b26d-e84fd0a50581",
+                                                                "created_at":  "2025-12-02T10:08:46.686Z",
+                                                                "first_name":  null,
+                                                                "updated_at":  "2025-12-02T10:08:46.686Z",
+                                                                "new_invitee":  null,
+                                                                "old_invitee":  null,
+                                                                "rescheduled":  false,
+                                                                "reconfirmation":  null,
+                                                                "reschedule_url":  "https://calendly.com/reschedulings/eaee99e3-54b0-4acf-b26d-e84fd0a50581",
+                                                                "scheduled_event":  {
+                                                                                        "uri":  "https://api.calendly.com/scheduled_events/18f855c9-823f-4126-9d35-abeadb1f039d",
+                                                                                        "name":  "בזום PLAN-T  פגישת היכרות  למערכת     ",
+                                                                                        "status":  "active",
+                                                                                        "end_time":  "2026-01-28T11:30:00.000Z",
+                                                                                        "location":  {
+                                                                                                         "data":  {
+                                                                                                                      "id":  83187644966,
+                                                                                                                      "extra":  {
+                                                                                                                                    "intl_numbers_url":  null
+                                                                                                                                },
+                                                                                                                      "password":  "109543",
+                                                                                                                      "settings":  {
+                                                                                                                                       "global_dial_in_numbers":  [
+                                                                                                                                                                      {
+                                                                                                                                                                          "city":  "Houston",
+                                                                                                                                                                          "type":  "toll",
+                                                                                                                                                                          "number":  "+1 346 248 7799",
+                                                                                                                                                                          "country":  "US",
+                                                                                                                                                                          "country_name":  "US"
+                                                                                                                                                                      }
+                                                                                                                                                                  ]
+                                                                                                                                   }
+                                                                                                                  },
+                                                                                                         "type":  "zoom",
+                                                                                                         "status":  "pushed",
+                                                                                                         "join_url":  "https://us06web.zoom.us/j/83187644966?pwd=JjVoDZJS90W9VKdXEVEUQiBRVvBjVV.1"
+                                                                                                     },
+                                                                                        "created_at":  "2025-12-02T10:08:46.673Z",
+                                                                                        "event_type":  "https://api.calendly.com/event_types/a3b34272-a662-44cd-9573-c9f223693b9e",
+                                                                                        "start_time":  "2026-01-28T11:00:00.000Z",
+                                                                                        "updated_at":  "2025-12-02T10:08:46.673Z",
+                                                                                        "event_guests":  [
+
+                                                                                                         ],
+                                                                                        "invitees_counter":  {
+                                                                                                                 "limit":  1,
+                                                                                                                 "total":  1,
+                                                                                                                 "active":  1
+                                                                                                             },
+                                                                                        "event_memberships":  [
+                                                                                                                  {
+                                                                                                                      "user":  "https://api.calendly.com/users/78b3470f-21e6-4400-9a1a-19291111e1f1",
+                                                                                                                      "user_name":  "sales",
+                                                                                                                      "user_email":  "sales@plan-t.org.il"
+                                                                                                                  }
+                                                                                                              ],
+                                                                                        "meeting_notes_html":  null,
+                                                                                        "meeting_notes_plain":  null
+                                                                                    },
+                                                                "scheduling_method":  null,
+                                                                "invitee_scheduled_by":  "https://api.calendly.com/users/78b3470f-21e6-4400-9a1a-19291111e1f1",
+                                                                "text_reminder_number":  null,
+                                                                "questions_and_answers":  [
+                                                                                              {
+                                                                                                  "answer":  "שימפופו",
+                                                                                                  "position":  1,
+                                                                                                  "question":  "שם משרד"
+                                                                                              }
+                                                                                          ],
+                                                                "routing_form_submission":  null
+                                                            },
+                                                      "2":  {
+                                                                "updates":  {
+                                                                                "updatedRows":  1,
+                                                                                "updatedCells":  6,
+                                                                                "updatedRange":  "\u0027יצירת קשר - לידים\u0027!A126:G126",
+                                                                                "spreadsheetId":  "1KVnCH206v5Bq4LT-cuTncBrvJwD5TcV1_zQwP2sOkeE",
+                                                                                "updatedColumns":  6
+                                                                            },
+                                                                "rowNumber":  126,
+                                                                "sheetName":  "יצירת קשר - לידים",
+                                                                "tableRange":  "\u0027יצירת קשר - לידים\u0027!A1:H125",
+                                                                "spreadsheetId":  "1KVnCH206v5Bq4LT-cuTncBrvJwD5TcV1_zQwP2sOkeE"
+                                                            },
+                                                      "3":  {
+                                                                "id":  "2548504278"
+                                                            },
+                                                      "16":  {
+                                                                 "var1":  "+972 54-670-0350"
+                                                             },
+                                                      "17":  {
+                                                                 "noSpaces":  "+972 546700350"
+                                                             },
+                                                      "18":  {
+                                                                 "toPhone":  "+ 546700350"
+                                                             },
+                                                      "19":  {
+                                                                 "toPhoneWithoutPlus":  " 546700350"
+                                                             },
+                                                      "20":  {
+                                                                 "lastVar":  "546700350"
+                                                             }
+                                                  }
+                                  },
+                     "scenario":  {
+                                      "dlq":  false,
+                                      "slots":  null,
+                                      "dataloss":  false,
+                                      "maxErrors":  3,
+                                      "autoCommit":  true,
+                                      "roundtrips":  1,
+                                      "sequential":  false,
+                                      "confidential":  false,
+                                      "freshVariables":  false,
+                                      "autoCommitTriggerLast":  true
+                                  }
+                 }
+}

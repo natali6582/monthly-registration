@@ -1,0 +1,1214 @@
+﻿{
+    "code":  "OK",
+    "response":  {
+                     "blueprint":  {
+                                       "flow":  [
+                                                    {
+                                                        "id":  1,
+                                                        "mapper":  {
+
+                                                                   },
+                                                        "module":  "monday:watchBoardColumnValues",
+                                                        "version":  1,
+                                                        "metadata":  {
+                                                                         "restore":  {
+                                                                                         "parameters":  {
+                                                                                                            "__IMTHOOK__":  {
+                                                                                                                                "data":  {
+                                                                                                                                             "editable":  "false"
+                                                                                                                                         },
+                                                                                                                                "label":  "My Monday Board\u0027s Column Values webhook"
+                                                                                                                            }
+                                                                                                        }
+                                                                                     },
+                                                                         "designer":  {
+                                                                                          "x":  0,
+                                                                                          "y":  0
+                                                                                      },
+                                                                         "parameters":  [
+                                                                                            {
+                                                                                                "name":  "__IMTHOOK__",
+                                                                                                "type":  "hook:monday3",
+                                                                                                "label":  "Webhook",
+                                                                                                "required":  true
+                                                                                            }
+                                                                                        ]
+                                                                     },
+                                                        "parameters":  {
+                                                                           "__IMTHOOK__":  2547342
+                                                                       }
+                                                    },
+                                                    {
+                                                        "id":  2,
+                                                        "filter":  {
+                                                                       "name":  "בדיקה האם זה נשלח ללקוח",
+                                                                       "conditions":  [
+                                                                                          [
+                                                                                              {
+                                                                                                  "a":  "{{1.value.label.text}}",
+                                                                                                  "b":  "פגישת הדרכה",
+                                                                                                  "o":  "text:equal"
+                                                                                              }
+                                                                                          ]
+                                                                                      ]
+                                                                   },
+                                                        "mapper":  {
+                                                                       "id":  "{{1.pulseId}}",
+                                                                       "boardId":  "1975213891",
+                                                                       "showSubitems":  true,
+                                                                       "showParentItem":  true,
+                                                                       "disableOutputInterfaceCaching":  false
+                                                                   },
+                                                        "module":  "monday:GetItem",
+                                                        "version":  1,
+                                                        "metadata":  {
+                                                                         "expect":  [
+                                                                                        {
+                                                                                            "name":  "id",
+                                                                                            "type":  "uinteger",
+                                                                                            "label":  "ID",
+                                                                                            "required":  true
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "showParentItem",
+                                                                                            "type":  "boolean",
+                                                                                            "label":  "Show Parent Item",
+                                                                                            "required":  true
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "showSubitems",
+                                                                                            "type":  "boolean",
+                                                                                            "label":  "Show Subitems",
+                                                                                            "required":  true
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "boardId",
+                                                                                            "type":  "select",
+                                                                                            "label":  "Board ID"
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "disableOutputInterfaceCaching",
+                                                                                            "type":  "boolean",
+                                                                                            "label":  "Disable Output Interface Caching",
+                                                                                            "required":  true
+                                                                                        }
+                                                                                    ],
+                                                                         "restore":  {
+                                                                                         "expect":  {
+                                                                                                        "boardId":  {
+                                                                                                                        "label":  "Leads  ::  public"
+                                                                                                                    }
+                                                                                                    },
+                                                                                         "parameters":  {
+                                                                                                            "__IMTCONN__":  {
+                                                                                                                                "data":  {
+                                                                                                                                             "scoped":  "true",
+                                                                                                                                             "connection":  "monday"
+                                                                                                                                         },
+                                                                                                                                "label":  "My Monday v2 connection (plan-t-company - ziv)"
+                                                                                                                            }
+                                                                                                        }
+                                                                                     },
+                                                                         "designer":  {
+                                                                                          "x":  300,
+                                                                                          "y":  0
+                                                                                      },
+                                                                         "interface":  [
+                                                                                           {
+                                                                                               "name":  "id",
+                                                                                               "type":  "uinteger",
+                                                                                               "label":  "ID"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "name",
+                                                                                               "type":  "text",
+                                                                                               "label":  "Name"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "email",
+                                                                                               "type":  "email",
+                                                                                               "label":  "Email"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "created_at",
+                                                                                               "type":  "date",
+                                                                                               "label":  "Created at"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "updated_at",
+                                                                                               "type":  "date",
+                                                                                               "label":  "Updated at"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "state",
+                                                                                               "type":  "text",
+                                                                                               "label":  "State"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "board",
+                                                                                               "spec":  [
+                                                                                                            {
+                                                                                                                "name":  "id",
+                                                                                                                "type":  "uinteger",
+                                                                                                                "label":  "ID"
+                                                                                                            }
+                                                                                                        ],
+                                                                                               "type":  "collection",
+                                                                                               "label":  "Board"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "creator_id",
+                                                                                               "type":  "uinteger",
+                                                                                               "label":  "Creator ID"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "group",
+                                                                                               "spec":  [
+                                                                                                            {
+                                                                                                                "name":  "id",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "ID"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "title",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Title"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "deleted",
+                                                                                                                "type":  "boolean",
+                                                                                                                "label":  "Deleted"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "archived",
+                                                                                                                "type":  "boolean",
+                                                                                                                "label":  "Archived"
+                                                                                                            }
+                                                                                                        ],
+                                                                                               "type":  "collection",
+                                                                                               "label":  "Group"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "column_values",
+                                                                                               "spec":  [
+                                                                                                            {
+                                                                                                                "name":  "id",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "ID"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "title",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Title"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "value",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Value"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "additional_info",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Additional Info"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "text",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Text"
+                                                                                                            }
+                                                                                                        ],
+                                                                                               "type":  "array",
+                                                                                               "label":  "Column Values"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "mappable_column_values",
+                                                                                               "spec":  [
+                                                                                                            {
+                                                                                                                "name":  "name",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Name"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "lead_status",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "index",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Index"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "post_id",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Post ID"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "changed_at",
+                                                                                                                                 "type":  "date",
+                                                                                                                                 "label":  "Changed at"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "additonal_info",
+                                                                                                                                 "spec":  [
+                                                                                                                                              {
+                                                                                                                                                  "name":  "label",
+                                                                                                                                                  "type":  "text",
+                                                                                                                                                  "label":  "Label"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "color",
+                                                                                                                                                  "type":  "color",
+                                                                                                                                                  "label":  "Color"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "changed_at",
+                                                                                                                                                  "type":  "date",
+                                                                                                                                                  "label":  "Changed at"
+                                                                                                                                              }
+                                                                                                                                          ],
+                                                                                                                                 "type":  "collection",
+                                                                                                                                 "label":  "Aditional info"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "value",
+                                                                                                                                 "type":  "any",
+                                                                                                                                 "label":  "Value"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "text",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Text"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Status"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "button",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Create a contact"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "lead_company",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Company"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "text",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Title"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "lead_email",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "email",
+                                                                                                                                 "type":  "email",
+                                                                                                                                 "label":  "Email"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "changed_at",
+                                                                                                                                 "type":  "date",
+                                                                                                                                 "label":  "Changed at"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "additonal_info",
+                                                                                                                                 "spec":  [
+                                                                                                                                              {
+                                                                                                                                                  "name":  "label",
+                                                                                                                                                  "type":  "text",
+                                                                                                                                                  "label":  "Label"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "color",
+                                                                                                                                                  "type":  "color",
+                                                                                                                                                  "label":  "Color"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "changed_at",
+                                                                                                                                                  "type":  "date",
+                                                                                                                                                  "label":  "Changed at"
+                                                                                                                                              }
+                                                                                                                                          ],
+                                                                                                                                 "type":  "collection",
+                                                                                                                                 "label":  "Aditional info"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "value",
+                                                                                                                                 "type":  "any",
+                                                                                                                                 "label":  "Value"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "text",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Text"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Email"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "lead_phone",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "phone",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Phone"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "countryShortName",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Country Short Name"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "changed_at",
+                                                                                                                                 "type":  "date",
+                                                                                                                                 "label":  "Changed at"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "additonal_info",
+                                                                                                                                 "spec":  [
+                                                                                                                                              {
+                                                                                                                                                  "name":  "label",
+                                                                                                                                                  "type":  "text",
+                                                                                                                                                  "label":  "Label"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "color",
+                                                                                                                                                  "type":  "color",
+                                                                                                                                                  "label":  "Color"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "changed_at",
+                                                                                                                                                  "type":  "date",
+                                                                                                                                                  "label":  "Changed at"
+                                                                                                                                              }
+                                                                                                                                          ],
+                                                                                                                                 "type":  "collection",
+                                                                                                                                 "label":  "Aditional info"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "value",
+                                                                                                                                 "type":  "any",
+                                                                                                                                 "label":  "Value"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "text",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Text"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Phone"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "date__1",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "date",
+                                                                                                                                 "type":  "date",
+                                                                                                                                 "label":  "Date"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "time",
+                                                                                                                                 "type":  "date",
+                                                                                                                                 "label":  "Time"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "changed_at",
+                                                                                                                                 "type":  "date",
+                                                                                                                                 "label":  "Changed at"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "additonal_info",
+                                                                                                                                 "spec":  [
+                                                                                                                                              {
+                                                                                                                                                  "name":  "label",
+                                                                                                                                                  "type":  "text",
+                                                                                                                                                  "label":  "Label"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "color",
+                                                                                                                                                  "type":  "color",
+                                                                                                                                                  "label":  "Color"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "changed_at",
+                                                                                                                                                  "type":  "date",
+                                                                                                                                                  "label":  "Changed at"
+                                                                                                                                              }
+                                                                                                                                          ],
+                                                                                                                                 "type":  "collection",
+                                                                                                                                 "label":  "Aditional info"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "value",
+                                                                                                                                 "type":  "any",
+                                                                                                                                 "label":  "Value"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "text",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Text"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Last interaction"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "enrolled_sequences_mkn3bg52",
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Active sequences"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "subtasks_mkx0rjws",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "linkedPulseIds",
+                                                                                                                                 "spec":  [
+                                                                                                                                              {
+                                                                                                                                                  "name":  "linkedPulseId",
+                                                                                                                                                  "type":  "text",
+                                                                                                                                                  "label":  "Subitem ID"
+                                                                                                                                              }
+                                                                                                                                          ],
+                                                                                                                                 "type":  "array",
+                                                                                                                                 "label":  "Subitem IDs"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "changed_at",
+                                                                                                                                 "type":  "date",
+                                                                                                                                 "label":  "Changed at"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "additonal_info",
+                                                                                                                                 "spec":  [
+                                                                                                                                              {
+                                                                                                                                                  "name":  "label",
+                                                                                                                                                  "type":  "text",
+                                                                                                                                                  "label":  "Label"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "color",
+                                                                                                                                                  "type":  "color",
+                                                                                                                                                  "label":  "Color"
+                                                                                                                                              },
+                                                                                                                                              {
+                                                                                                                                                  "name":  "changed_at",
+                                                                                                                                                  "type":  "date",
+                                                                                                                                                  "label":  "Changed at"
+                                                                                                                                              }
+                                                                                                                                          ],
+                                                                                                                                 "type":  "collection",
+                                                                                                                                 "label":  "Aditional info"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "value",
+                                                                                                                                 "type":  "any",
+                                                                                                                                 "label":  "Value"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "text",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Text"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Subitems"
+                                                                                                            }
+                                                                                                        ],
+                                                                                               "type":  "collection",
+                                                                                               "label":  "Mappable column values"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "assets",
+                                                                                               "spec":  [
+                                                                                                            {
+                                                                                                                "name":  "id",
+                                                                                                                "type":  "uinteger",
+                                                                                                                "label":  "ID"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "name",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Name"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "public_url",
+                                                                                                                "type":  "url",
+                                                                                                                "label":  "Public URL"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "url",
+                                                                                                                "type":  "url",
+                                                                                                                "label":  "URL"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "file_extension",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "File Extension"
+                                                                                                            }
+                                                                                                        ],
+                                                                                               "type":  "array",
+                                                                                               "label":  "Assets"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "parent_item",
+                                                                                               "spec":  [
+                                                                                                            {
+                                                                                                                "name":  "id",
+                                                                                                                "type":  "uinteger",
+                                                                                                                "label":  "ID"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "name",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Name"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "created_at",
+                                                                                                                "type":  "date",
+                                                                                                                "label":  "Created at"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "updated_at",
+                                                                                                                "type":  "date",
+                                                                                                                "label":  "Updated at"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "state",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "State"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "board",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "id",
+                                                                                                                                 "type":  "uinteger",
+                                                                                                                                 "label":  "ID"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Board"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "creator_id",
+                                                                                                                "type":  "uinteger",
+                                                                                                                "label":  "Creator ID"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "group",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "id",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "ID"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Group"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "column_values",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "id",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "ID"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "title",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Title"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "value",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Value"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "additional_info",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Additional Info"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "text",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Text"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "array",
+                                                                                                                "label":  "Column Values"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "mappable_column_values",
+                                                                                                                "spec":  [
+
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Mappable column values"
+                                                                                                            }
+                                                                                                        ],
+                                                                                               "type":  "collection",
+                                                                                               "label":  "Parent Item"
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "subitems",
+                                                                                               "spec":  [
+                                                                                                            {
+                                                                                                                "name":  "id",
+                                                                                                                "type":  "uinteger",
+                                                                                                                "label":  "ID"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "name",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "Name"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "created_at",
+                                                                                                                "type":  "date",
+                                                                                                                "label":  "Created at"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "updated_at",
+                                                                                                                "type":  "date",
+                                                                                                                "label":  "Updated at"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "state",
+                                                                                                                "type":  "text",
+                                                                                                                "label":  "State"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "board",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "id",
+                                                                                                                                 "type":  "uinteger",
+                                                                                                                                 "label":  "ID"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Board"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "creator_id",
+                                                                                                                "type":  "uinteger",
+                                                                                                                "label":  "Creator ID"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "group",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "id",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "ID"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Group"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "column_values",
+                                                                                                                "spec":  [
+                                                                                                                             {
+                                                                                                                                 "name":  "id",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "ID"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "title",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Title"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "value",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Value"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "additional_info",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Additional Info"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "name":  "text",
+                                                                                                                                 "type":  "text",
+                                                                                                                                 "label":  "Text"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                                "type":  "array",
+                                                                                                                "label":  "Column Values"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name":  "mappable_column_values",
+                                                                                                                "spec":  [
+
+                                                                                                                         ],
+                                                                                                                "type":  "collection",
+                                                                                                                "label":  "Mappable column values"
+                                                                                                            }
+                                                                                                        ],
+                                                                                               "type":  "array",
+                                                                                               "label":  "Subitems"
+                                                                                           }
+                                                                                       ],
+                                                                         "parameters":  [
+                                                                                            {
+                                                                                                "name":  "__IMTCONN__",
+                                                                                                "type":  "account:monday",
+                                                                                                "label":  "Connection",
+                                                                                                "required":  true
+                                                                                            }
+                                                                                        ]
+                                                                     },
+                                                        "parameters":  {
+                                                                           "__IMTCONN__":  6488016
+                                                                       }
+                                                    },
+                                                    {
+                                                        "id":  4,
+                                                        "mapper":  {
+                                                                       "content":  "\u003c!DOCTYPE html\u003e\n\u003chtml dir=\"rtl\" lang=\"he\"\u003e\n\u003chead\u003e\n  \u003cmeta charset=\"UTF-8\"\u003e\n  \u003cstyle\u003e\n    body {\n      margin: 0;\n      padding: 0;\n      background: #f6f8fb;\n      direction: rtl;\n      text-align: right;\n      font-family: \u0027Segoe UI\u0027, Arial, sans-serif;\n      color: #1f2937;\n      line-height: 1.7;\n    }\n    .wrap {\n      max-width: 640px;\n      margin: 0 auto;\n      padding: 28px 16px;\n    }\n    .card {\n      background: #ffffff;\n      border: 1px solid #e5e7eb;\n      border-radius: 8px;\n      padding: 28px;\n    }\n    h1 {\n      margin: 0 0 16px;\n      font-size: 22px;\n      line-height: 1.4;\n      color: #111827;\n    }\n    p {\n      margin: 0 0 14px;\n      font-size: 15px;\n    }\n    .button-row {\n      margin: 26px 0 24px;\n      text-align: center;\n    }\n    .button {\n      display: inline-block;\n      background: #0f74d1;\n      color: #ffffff !important;\n      text-decoration: none;\n      padding: 12px 24px;\n      border-radius: 6px;\n      font-weight: 700;\n      font-size: 15px;\n    }\n    .link {\n      direction: ltr;\n      text-align: center;\n      word-break: break-all;\n      font-size: 13px;\n      color: #0f74d1;\n    }\n    .footer {\n      margin-top: 24px;\n      padding-top: 18px;\n      border-top: 1px solid #e5e7eb;\n      font-weight: 700;\n      color: #111827;\n    }\n  \u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n  \u003cdiv class=\"wrap\"\u003e\n    \u003cdiv class=\"card\"\u003e\n      \u003ch1\u003eההרשמה שלך להדרכה התקבלה\u003c/h1\u003e\n      \u003cp\u003eשלום {{2.name}},\u003c/p\u003e\n      \u003cp\u003eתודה על ההרשמה להדרכה במערכת \u003cstrong\u003ePLAN-T\u003c/strong\u003e.\u003c/p\u003e\n      \u003cp\u003eכדי להשלים את התיאום, יש לבחור מועד הדרכה בקישור Calendly:\u003c/p\u003e\n      \u003cdiv class=\"button-row\"\u003e\n        \u003ca class=\"button\" href=\"https://calendly.com/d/cs9n-kyz-6m2/plan-t-new\" target=\"_blank\" rel=\"noopener\"\u003eבחירת מועד הדרכה\u003c/a\u003e\n      \u003c/div\u003e\n      \u003cp class=\"link\"\u003ehttps://calendly.com/d/cs9n-kyz-6m2/plan-t-new\u003c/p\u003e\n      \u003cp\u003eלאחר בחירת המועד יישלח אליך זימון יומן אוטומטי עם פרטי הפגישה.\u003c/p\u003e\n      \u003cp\u003eלכל שאלה ניתן להשיב למייל זה.\u003c/p\u003e\n      \u003cdiv class=\"footer\"\u003e\n        בברכה,\u003cbr\u003e\n        צוות PLAN-T\n      \u003c/div\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e",
+                                                                       "subject":  "השלמת הרשמה להדרכה במערכת PLAN-T",
+                                                                       "contentType":  "html",
+                                                                       "toRecipients":  [
+                                                                                            {
+                                                                                                "address":  "{{2.mappable_column_values.lead_email.email}}"
+                                                                                            }
+                                                                                        ],
+                                                                       "bccRecipients":  [
+                                                                                             {
+                                                                                                 "address":  "idan@Plan-t.org.il"
+                                                                                             },
+                                                                                             {
+                                                                                                 "address":  "liora@Plan-t.org.il"
+                                                                                             }
+                                                                                         ],
+                                                                       "singleValueExtendedProperties":  {
+
+                                                                                                         }
+                                                                   },
+                                                        "module":  "microsoft-email:createAndSendAMessage",
+                                                        "version":  2,
+                                                        "metadata":  {
+                                                                         "expect":  [
+                                                                                        {
+                                                                                            "name":  "toRecipients",
+                                                                                            "spec":  [
+                                                                                                         {
+                                                                                                             "name":  "address",
+                                                                                                             "type":  "email",
+                                                                                                             "label":  "Email Address",
+                                                                                                             "required":  true
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "name":  "name",
+                                                                                                             "type":  "text",
+                                                                                                             "label":  "Name"
+                                                                                                         }
+                                                                                                     ],
+                                                                                            "type":  "array",
+                                                                                            "label":  "To Recipients",
+                                                                                            "required":  true
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "subject",
+                                                                                            "type":  "text",
+                                                                                            "label":  "Subject",
+                                                                                            "required":  true
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "content",
+                                                                                            "type":  "text",
+                                                                                            "label":  "Body Content",
+                                                                                            "required":  true
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "attachments",
+                                                                                            "spec":  [
+                                                                                                         {
+                                                                                                             "name":  "filename",
+                                                                                                             "type":  "filename",
+                                                                                                             "label":  "File Name",
+                                                                                                             "required":  true,
+                                                                                                             "semantic":  "file:name"
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "name":  "data",
+                                                                                                             "type":  "buffer",
+                                                                                                             "label":  "Data",
+                                                                                                             "required":  true,
+                                                                                                             "semantic":  "file:data"
+                                                                                                         }
+                                                                                                     ],
+                                                                                            "type":  "array",
+                                                                                            "label":  "Attachments"
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "replyTo",
+                                                                                            "spec":  [
+                                                                                                         {
+                                                                                                             "name":  "address",
+                                                                                                             "type":  "email",
+                                                                                                             "label":  "Email Address",
+                                                                                                             "required":  true
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "name":  "name",
+                                                                                                             "type":  "text",
+                                                                                                             "label":  "Name"
+                                                                                                         }
+                                                                                                     ],
+                                                                                            "type":  "array",
+                                                                                            "label":  "Reply To"
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "from",
+                                                                                            "spec":  [
+                                                                                                         {
+                                                                                                             "name":  "address",
+                                                                                                             "type":  "email",
+                                                                                                             "label":  "Email Address",
+                                                                                                             "required":  true
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "name":  "name",
+                                                                                                             "type":  "text",
+                                                                                                             "label":  "Name"
+                                                                                                         }
+                                                                                                     ],
+                                                                                            "type":  "array",
+                                                                                            "label":  "From",
+                                                                                            "validate":  {
+                                                                                                             "maxItems":  1
+                                                                                                         }
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "ccRecipients",
+                                                                                            "spec":  [
+                                                                                                         {
+                                                                                                             "name":  "address",
+                                                                                                             "type":  "email",
+                                                                                                             "label":  "Email Address",
+                                                                                                             "required":  true
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "name":  "name",
+                                                                                                             "type":  "text",
+                                                                                                             "label":  "Name"
+                                                                                                         }
+                                                                                                     ],
+                                                                                            "type":  "array",
+                                                                                            "label":  "CC Recipients"
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "bccRecipients",
+                                                                                            "spec":  [
+                                                                                                         {
+                                                                                                             "name":  "address",
+                                                                                                             "type":  "email",
+                                                                                                             "label":  "Email Address",
+                                                                                                             "required":  true
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "name":  "name",
+                                                                                                             "type":  "text",
+                                                                                                             "label":  "Name"
+                                                                                                         }
+                                                                                                     ],
+                                                                                            "type":  "array",
+                                                                                            "label":  "Bcc Recipients"
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "importance",
+                                                                                            "type":  "select",
+                                                                                            "label":  "Importance",
+                                                                                            "validate":  {
+                                                                                                             "enum":  [
+                                                                                                                          "Low",
+                                                                                                                          "Normal",
+                                                                                                                          "High"
+                                                                                                                      ]
+                                                                                                         }
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "internetMessageHeaders",
+                                                                                            "spec":  [
+                                                                                                         {
+                                                                                                             "name":  "name",
+                                                                                                             "type":  "text",
+                                                                                                             "label":  "Name",
+                                                                                                             "required":  true
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "name":  "value",
+                                                                                                             "type":  "text",
+                                                                                                             "label":  "Value",
+                                                                                                             "required":  true
+                                                                                                         }
+                                                                                                     ],
+                                                                                            "type":  "array",
+                                                                                            "label":  "Internet Message Headers"
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "contentType",
+                                                                                            "type":  "select",
+                                                                                            "label":  "Body Content Type",
+                                                                                            "required":  true,
+                                                                                            "validate":  {
+                                                                                                             "enum":  [
+                                                                                                                          "html",
+                                                                                                                          "text"
+                                                                                                                      ]
+                                                                                                         }
+                                                                                        },
+                                                                                        {
+                                                                                            "name":  "singleValueExtendedProperties",
+                                                                                            "spec":  [
+                                                                                                         {
+                                                                                                             "name":  "sensitivityLabel",
+                                                                                                             "type":  "text",
+                                                                                                             "label":  "Sensitivity Label"
+                                                                                                         }
+                                                                                                     ],
+                                                                                            "type":  "collection",
+                                                                                            "label":  "Extended MAPI Properties"
+                                                                                        }
+                                                                                    ],
+                                                                         "restore":  {
+                                                                                         "expect":  {
+                                                                                                        "from":  {
+                                                                                                                     "mode":  "chose"
+                                                                                                                 },
+                                                                                                        "replyTo":  {
+                                                                                                                        "mode":  "chose"
+                                                                                                                    },
+                                                                                                        "importance":  {
+                                                                                                                           "mode":  "chose",
+                                                                                                                           "label":  "Empty"
+                                                                                                                       },
+                                                                                                        "attachments":  {
+                                                                                                                            "mode":  "chose"
+                                                                                                                        },
+                                                                                                        "contentType":  {
+                                                                                                                            "mode":  "chose",
+                                                                                                                            "label":  "HTML"
+                                                                                                                        },
+                                                                                                        "ccRecipients":  {
+                                                                                                                             "mode":  "chose"
+                                                                                                                         },
+                                                                                                        "toRecipients":  {
+                                                                                                                             "mode":  "chose",
+                                                                                                                             "items":  [
+                                                                                                                                           null
+                                                                                                                                       ]
+                                                                                                                         },
+                                                                                                        "bccRecipients":  {
+                                                                                                                              "mode":  "chose",
+                                                                                                                              "items":  [
+                                                                                                                                            null,
+                                                                                                                                            null
+                                                                                                                                        ]
+                                                                                                                          },
+                                                                                                        "internetMessageHeaders":  {
+                                                                                                                                       "mode":  "chose"
+                                                                                                                                   }
+                                                                                                    },
+                                                                                         "parameters":  {
+                                                                                                            "__IMTCONN__":  {
+                                                                                                                                "data":  {
+                                                                                                                                             "scoped":  "true",
+                                                                                                                                             "connection":  "azure"
+                                                                                                                                         },
+                                                                                                                                "label":  "חיבור הדרכה ליאור (sales \u003csales@plan-t.org.il\u003e)"
+                                                                                                                            }
+                                                                                                        }
+                                                                                     },
+                                                                         "advanced":  true,
+                                                                         "designer":  {
+                                                                                          "x":  600,
+                                                                                          "y":  0
+                                                                                      },
+                                                                         "parameters":  [
+                                                                                            {
+                                                                                                "name":  "__IMTCONN__",
+                                                                                                "type":  "account:azure",
+                                                                                                "label":  "Connection",
+                                                                                                "required":  true
+                                                                                            }
+                                                                                        ]
+                                                                     },
+                                                        "parameters":  {
+                                                                           "__IMTCONN__":  9792021
+                                                                       }
+                                                    }
+                                                ],
+                                       "name":  "שליחת מייל לפגישת הדרכה (copy)",
+                                       "metadata":  {
+                                                        "instant":  true,
+                                                        "version":  1,
+                                                        "designer":  {
+                                                                         "orphans":  [
+
+                                                                                     ],
+                                                                         "samples":  {
+                                                                                         "1":  {
+                                                                                                   "app":  "monday",
+                                                                                                   "type":  "update_column_value",
+                                                                                                   "value":  {
+                                                                                                                 "label":  {
+                                                                                                                               "text":  "פגישת הדרכה",
+                                                                                                                               "index":  2,
+                                                                                                                               "style":  {
+                                                                                                                                             "color":  "#784bd1",
+                                                                                                                                             "border":  "#8f4dc4",
+                                                                                                                                             "var_name":  "dark-purple"
+                                                                                                                                         },
+                                                                                                                               "is_done":  false
+                                                                                                                           },
+                                                                                                                 "post_id":  null
+                                                                                                             },
+                                                                                                   "userId":  89240114,
+                                                                                                   "boardId":  1988799743,
+                                                                                                   "groupId":  "topics",
+                                                                                                   "isRetry":  false,
+                                                                                                   "pulseId":  2723194561,
+                                                                                                   "columnId":  "lead_status",
+                                                                                                   "changedAt":  "2026-02-16T08:37:27.710Z",
+                                                                                                   "pulseName":  "זיו בדיקה",
+                                                                                                   "columnType":  "color",
+                                                                                                   "isTopGroup":  true,
+                                                                                                   "columnTitle":  "Status",
+                                                                                                   "triggerTime":  "2026-02-16T08:37:28.245Z",
+                                                                                                   "triggerUuid":  "a9645f092ccb193d9084185a3ca80b79",
+                                                                                                   "previousValue":  {
+                                                                                                                         "label":  {
+                                                                                                                                       "text":  "ליד חדש",
+                                                                                                                                       "index":  0,
+                                                                                                                                       "style":  {
+                                                                                                                                                     "color":  "#ff7575",
+                                                                                                                                                     "border":  "#ff7575",
+                                                                                                                                                     "var_name":  "sunset"
+                                                                                                                                                 },
+                                                                                                                                       "is_done":  false
+                                                                                                                                   },
+                                                                                                                         "post_id":  null
+                                                                                                                     },
+                                                                                                   "subscriptionId":  89554049,
+                                                                                                   "originalTriggerUuid":  null
+                                                                                               },
+                                                                                         "2":  {
+                                                                                                   "id":  "2723194561",
+                                                                                                   "name":  "זיו בדיקה",
+                                                                                                   "board":  {
+                                                                                                                 "id":  "1988799743"
+                                                                                                             },
+                                                                                                   "email":  "plan-t-company_pulse_2723194561_62b00e57de2551f8b365__82559726@euc1.mx.monday.com",
+                                                                                                   "group":  {
+                                                                                                                 "id":  "topics",
+                                                                                                                 "title":  "New Leads",
+                                                                                                                 "deleted":  false,
+                                                                                                                 "archived":  false
+                                                                                                             },
+                                                                                                   "state":  "active",
+                                                                                                   "assets":  [
+
+                                                                                                              ],
+                                                                                                   "subitems":  [
+
+                                                                                                                ],
+                                                                                                   "created_at":  "2026-02-16T08:36:59Z",
+                                                                                                   "creator_id":  "89240114",
+                                                                                                   "updated_at":  "2026-02-16T08:37:29Z",
+                                                                                                   "parent_item":  null,
+                                                                                                   "column_values":  [
+                                                                                                                         {
+                                                                                                                             "id":  "date_mkyxy805",
+                                                                                                                             "text":  "Move to Contacts",
+                                                                                                                             "title":  "תאריך המרה ללקוח",
+                                                                                                                             "value":  "{\"date\":\"2026-02-16\",\"changed_at\":\"2026-02-16T08:37:29.116Z\"}",
+                                                                                                                             "additional_info":  "{\"label\":\"פגישת הדרכה\",\"color\":\"#784bd1\",\"changed_at\":\"2026-02-16T08:37:27.234Z\"}"
+                                                                                                                         }
+                                                                                                                     ],
+                                                                                                   "mappable_column_values":  {
+                                                                                                                                  "button":  "Move to Contacts",
+                                                                                                                                  "lead_email":  {
+                                                                                                                                                     "text":  "ziv@plan-t.org.il",
+                                                                                                                                                     "email":  "ziv@plan-t.org.il",
+                                                                                                                                                     "changed_at":  "2026-02-16T08:37:11.615Z"
+                                                                                                                                                 },
+                                                                                                                                  "lead_owner":  null,
+                                                                                                                                  "lead_phone":  null,
+                                                                                                                                  "lead_status":  {
+                                                                                                                                                      "text":  "פגישת הדרכה",
+                                                                                                                                                      "index":  2,
+                                                                                                                                                      "post_id":  null,
+                                                                                                                                                      "changed_at":  "2026-02-16T08:37:27.234Z",
+                                                                                                                                                      "additonal_info":  {
+                                                                                                                                                                             "color":  "#784bd1",
+                                                                                                                                                                             "label":  "פגישת הדרכה",
+                                                                                                                                                                             "changed_at":  "2026-02-16T08:37:27.234Z"
+                                                                                                                                                                         }
+                                                                                                                                                  },
+                                                                                                                                  "date_mksm3h1t":  null,
+                                                                                                                                  "date_mksmbwf6":  {
+                                                                                                                                                        "date":  "2026-02-16",
+                                                                                                                                                        "text":  "2026-02-16",
+                                                                                                                                                        "changed_at":  "2026-02-16T08:37:29.116Z"
+                                                                                                                                                    },
+                                                                                                                                  "date_mkwry2yv":  null,
+                                                                                                                                  "date_mkx3gjcf":  null,
+                                                                                                                                  "date_mkyxy805":  null,
+                                                                                                                                  "text_mkws3new":  null,
+                                                                                                                                  "text_mkws6xp7":  null,
+                                                                                                                                  "text_mkws8g7y":  null,
+                                                                                                                                  "text_mkws8j9x":  null,
+                                                                                                                                  "text_mkwsg4mj":  null,
+                                                                                                                                  "rating_mkwxhb67":  null,
+                                                                                                                                  "dropdown_mkwr6hmx":  null,
+                                                                                                                                  "dropdown_mkwr6x2f":  null,
+                                                                                                                                  "subtasks_mksmpn89":  {
+
+                                                                                                                                                        },
+                                                                                                                                  "board_relation_mkrkngxx":  null,
+                                                                                                                                  "board_relation_mksm4sfw":  null,
+                                                                                                                                  "board_relation_mksmnkrr":  null,
+                                                                                                                                  "board_relation_mkta7x91":  null
+                                                                                                                              }
+                                                                                               }
+                                                                                     }
+                                                                     },
+                                                        "scenario":  {
+                                                                         "dlq":  false,
+                                                                         "slots":  null,
+                                                                         "dataloss":  false,
+                                                                         "maxErrors":  3,
+                                                                         "autoCommit":  true,
+                                                                         "roundtrips":  1,
+                                                                         "sequential":  false,
+                                                                         "confidential":  false,
+                                                                         "freshVariables":  false,
+                                                                         "autoCommitTriggerLast":  true
+                                                                     }
+                                                    }
+                                   },
+                     "scheduling":  {
+                                        "type":  "immediately",
+                                        "maximum_runs_per_minute":  100
+                                    },
+                     "concept":  false,
+                     "created":  "2026-07-07T15:34:39.014Z",
+                     "last_edit":  "2026-07-07T15:45:58.387Z",
+                     "metadata":  {
+                                      "input_spec":  [
+
+                                                     ],
+                                      "output_spec":  [
+
+                                                      ]
+                                  },
+                     "idSequence":  5
+                 }
+}

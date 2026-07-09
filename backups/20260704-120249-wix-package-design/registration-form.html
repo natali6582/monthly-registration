@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --blue: #1167b1;
+      --cyan: #2aa8df;
+      --green: #8cc63f;
+      --ink: #11182f;
+      --muted: #5d6882;
+      --line: #d9e2ef;
+      --surface: #f6f9fc;
+      font-family: Arial, "Helvetica Neue", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .logo {
+      width: 190px;
+      max-width: 70%;
+      margin: 0 auto 6px;
+      display: block;
+    }
+
+    h2,
+    p {
+      margin: 0;
+      text-align: center;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .fields {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 12px 13px;
+      font: inherit;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    input:focus {
+      outline: 2px solid rgba(42, 168, 223, .35);
+      border-color: var(--cyan);
+      background: #ffffff;
+    }
+
+    fieldset {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 0;
+    }
+
+    legend {
+      padding: 0 8px;
+      font-weight: 700;
+    }
+
+    .topics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .topic {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #ffffff;
+      cursor: pointer;
+      min-height: 84px;
+    }
+
+    .topic input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .topic strong,
+    .topic span {
+      display: block;
+    }
+
+    .topic span {
+      margin-top: 6px;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.35;
+    }
+
+    .topic:has(input:checked) {
+      border-color: var(--cyan);
+      box-shadow: inset 0 0 0 2px rgba(42, 168, 223, .25);
+      background: #eef8fd;
+    }
+
+    .selected,
+    .status {
+      min-height: 24px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .status {
+      font-weight: 700;
+    }
+
+    button {
+      width: fit-content;
+      border: 0;
+      border-radius: 8px;
+      padding: 13px 24px;
+      background: var(--blue);
+      color: #ffffff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 620px) {
+      form {
+        padding: 18px;
+      }
+
+      .topics {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <form id="registrationForm" novalidate>
+    <img class="logo" src="https://static.wixstatic.com/media/YOUR_LOGO_FILE.jpg" alt="Plan-T Smart Financial Platform">
+
+    <h2>הרשמה להדרכת לקוחות</h2>
+    <p>מלאו פרטים ובחרו את הנושאים שהכי חשובים לכם.</p>
+
+    <div class="fields">
+      <label>
+        שם מלא
+        <input name="name" autocomplete="name" required>
+      </label>
+
+      <label>
+        חברה / שם משרד
+        <input name="company" autocomplete="organization" required>
+      </label>
+
+      <label>
+        אימייל
+        <input name="email" type="email" autocomplete="email" required>
+      </label>
+
+      <label>
+        טלפון
+        <input name="phone" autocomplete="tel" required>
+      </label>
+    </div>
+
+    <fieldset>
+      <legend>בחירת נושאים</legend>
+      <div class="topics">
+        <label class="topic">
+          <input type="checkbox" name="topic" value="טעינת קבצים">
+          <strong>טעינת קבצים</strong>
+          <span>קבצים, בנקים ואחזקות שלא נקלטו</span>
+        </label>
+        <label class="topic">
+          <input type="checkbox" name="topic" value="קליטת נתונים מהממשק האחיד">
+          <strong>קליטת נתונים מהממשק האחיד</strong>
+          <span>מסלקה, ממשק אחיד ובדיקת קליטה</span>
+        </label>
+        <label class="topic">
+          <input type="checkbox" name="topic" value="נתונים, תשואה ויתרות">
+          <strong>נתונים, תשואה ויתרות</strong>
+          <span>בדיקות, אלוקציה, סיווגים וחשיפות</span>
+        </label>
+        <label class="topic">
+          <input type="checkbox" name="topic" value="דוחות ללקוחות">
+          <strong>דוחות ללקוחות</strong>
+          <span>דוח תשואה, תמונה פיננסית ושליחה אוטומטית</span>
+        </label>
+        <label class="topic">
+          <input type="checkbox" name="topic" value="פעולות וניודים">
+          <strong>פעולות וניודים</strong>
+          <span>הפקדות, פדיונות, פתיחה ושחזור פעולה</span>
+        </label>
+        <label class="topic">
+          <input type="checkbox" name="topic" value="הגדרות והרשאות משרד">
+          <strong>הגדרות והרשאות משרד</strong>
+          <span>עובדי המשרד, תפקידים והרשאות גישה</span>
+        </label>
+        <label class="topic">
+          <input type="checkbox" name="topic" value="איחוד/מיזוג לקוחות">
+          <strong>איחוד/מיזוג לקוחות</strong>
+          <span>בני זוג, משפחות ושיוך מחדש</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <label>
+      אחר
+      <input name="other_topic" id="otherTopic" placeholder="כתבו נושא נוסף שמעניין אתכם">
+    </label>
+
+    <div class="selected" id="selectedTopics">לא נבחרו נושאים עדיין</div>
+    <div class="status" id="status" aria-live="polite"></div>
+
+    <button id="submitButton" type="submit">שליחת הרשמה</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    const statusBox = document.getElementById('status');
+    const selectedBox = document.getElementById('selectedTopics');
+    const submitButton = document.getElementById('submitButton');
+    const topicInputs = Array.from(document.querySelectorAll('input[name="topic"]'));
+    const otherTopic = document.getElementById('otherTopic');
+
+    function selectedTopics() {
+      const checked = topicInputs.filter((input) => input.checked).map((input) => input.value);
+      const other = otherTopic.value.trim();
+      return other ? checked.concat(`אחר: ${other}`) : checked;
+    }
+
+    function updateSelectedText() {
+      const topics = selectedTopics();
+      selectedBox.textContent = topics.length
+        ? `נבחרו: ${topics.join(' | ')}`
+        : 'לא נבחרו נושאים עדיין';
+    }
+
+    function setSending(isSending) {
+      submitButton.disabled = isSending;
+      statusBox.textContent = isSending ? 'שולח...' : '';
+    }
+
+    topicInputs.forEach((input) => input.addEventListener('change', updateSelectedText));
+    otherTopic.addEventListener('input', updateSelectedText);
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const topics = selectedTopics();
+
+      if (!topics.length) {
+        statusBox.textContent = 'בחרו לפחות נושא אחד.';
+        return;
+      }
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      const payload = {
+        name: form.elements.name.value,
+        company: form.elements.company.value,
+        email: form.elements.email.value,
+        phone: form.elements.phone.value,
+        selected_topics: topics.join(', ')
+      };
+
+      setSending(true);
+      window.parent.postMessage({
+        type: 'plan-t-registration-submit',
+        payload
+      }, '*');
+    });
+
+    window.addEventListener('message', (event) => {
+      const message = event.data || {};
+
+      if (message.type !== 'plan-t-registration-status') {
+        return;
+      }
+
+      if (message.status === 'sending') {
+        setSending(true);
+        return;
+      }
+
+      setSending(false);
+
+      if (message.status === 'success') {
+        form.reset();
+        updateSelectedText();
+        statusBox.textContent = 'ההרשמה נשלחה.';
+        return;
+      }
+
+      statusBox.textContent = message.message || 'ההרשמה לא נשלחה. נסו שוב.';
+    });
+
+    updateSelectedText();
+  </script>
+</body>
+</html>

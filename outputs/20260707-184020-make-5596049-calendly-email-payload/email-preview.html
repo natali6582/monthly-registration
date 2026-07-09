@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f6f8fb;
+      direction: rtl;
+      text-align: right;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #1f2937;
+      line-height: 1.7;
+    }
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 28px 16px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 28px;
+    }
+    h1 {
+      margin: 0 0 16px;
+      font-size: 22px;
+      line-height: 1.4;
+      color: #111827;
+    }
+    p {
+      margin: 0 0 14px;
+      font-size: 15px;
+    }
+    .button-row {
+      margin: 26px 0 24px;
+      text-align: center;
+    }
+    .button {
+      display: inline-block;
+      background: #0f74d1;
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .link {
+      direction: ltr;
+      text-align: center;
+      word-break: break-all;
+      font-size: 13px;
+      color: #0f74d1;
+    }
+    .footer {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
+      font-weight: 700;
+      color: #111827;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>ההרשמה שלך להדרכה התקבלה</h1>
+      <p>שלום {{2.name}},</p>
+      <p>תודה על ההרשמה להדרכה במערכת <strong>PLAN-T</strong>.</p>
+      <p>כדי להשלים את התיאום, יש לבחור מועד הדרכה בקישור Calendly:</p>
+      <div class="button-row">
+        <a class="button" href="https://calendly.com/d/cs9n-kyz-6m2/plan-t-new" target="_blank" rel="noopener">בחירת מועד הדרכה</a>
+      </div>
+      <p class="link">https://calendly.com/d/cs9n-kyz-6m2/plan-t-new</p>
+      <p>לאחר בחירת המועד יישלח אליך זימון יומן אוטומטי עם פרטי הפגישה.</p>
+      <p>לכל שאלה ניתן להשיב למייל זה.</p>
+      <div class="footer">
+        בברכה,<br>
+        צוות PLAN-T
+      </div>
+    </div>
+  </div>
+</body>
+</html>
