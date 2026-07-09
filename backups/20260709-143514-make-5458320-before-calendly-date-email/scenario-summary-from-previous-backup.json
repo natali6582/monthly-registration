@@ -1,0 +1,95 @@
+﻿{
+    "id":  5458320,
+    "name":  "הרשמה ל הדרכה (נטלי)",
+    "teamId":  1621766,
+    "hookId":  2486199,
+    "devices":  [
+
+                ],
+    "deviceId":  null,
+    "deviceScope":  null,
+    "concept":  false,
+    "description":  "",
+    "folderId":  null,
+    "slots":  null,
+    "isinvalid":  false,
+    "islinked":  true,
+    "islocked":  false,
+    "isPaused":  false,
+    "usedPackages":  [
+                         "gateway",
+                         "google-sheets",
+                         "google-sheets",
+                         "monday",
+                         "calendly",
+                         "calendly",
+                         "util",
+                         "util",
+                         "microsoft-email"
+                     ],
+    "lastEdit":  "2026-07-09T09:36:03.581Z",
+    "scheduling":  {
+                       "type":  "indefinitely",
+                       "interval":  900
+                   },
+    "iswaiting":  false,
+    "dlqCount":  0,
+    "allDlqCount":  0,
+    "createdByUser":  {
+                          "id":  6100228,
+                          "name":  "PLAN-T",
+                          "email":  "plant3576@gmail.com"
+                      },
+    "updatedByUser":  {
+                          "id":  6100228,
+                          "name":  "PLAN-T",
+                          "email":  "plant3576@gmail.com"
+                      },
+    "nextExec":  "2026-07-09T09:51:31.624Z",
+    "created":  "2026-06-22T09:35:34.504Z",
+    "chainingRole":  "none",
+    "type":  "scenario",
+    "isShared":  false,
+    "operations":  373,
+    "centicredits":  37300,
+    "transfer":  237693,
+    "usedModules":  [
+                        {
+                            "moduleName":  "CustomWebHook",
+                            "packageName":  "gateway"
+                        },
+                        {
+                            "moduleName":  "filterRows",
+                            "packageName":  "google-sheets"
+                        },
+                        {
+                            "moduleName":  "addRow",
+                            "packageName":  "google-sheets"
+                        },
+                        {
+                            "moduleName":  "createItem2",
+                            "packageName":  "monday"
+                        },
+                        {
+                            "moduleName":  "makeApiCall",
+                            "packageName":  "calendly"
+                        },
+                        {
+                            "moduleName":  "makeApiCall",
+                            "packageName":  "calendly"
+                        },
+                        {
+                            "moduleName":  "SetVariable2",
+                            "packageName":  "util"
+                        },
+                        {
+                            "moduleName":  "GetVariable2",
+                            "packageName":  "util"
+                        },
+                        {
+                            "moduleName":  "createAndSendAMessage",
+                            "packageName":  "microsoft-email"
+                        }
+                    ],
+    "isActive":  true
+}
