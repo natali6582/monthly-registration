@@ -1,0 +1,118 @@
+Delivered-To: natali.koifman@gmail.com
+Received: by 2002:adf:fb90:0:b0:47d:e121:2ca6 with SMTP id a16csp11475wrr;
+        Mon, 13 Jul 2026 12:58:53 -0700 (PDT)
+X-Received: by 2002:a05:690c:6986:b0:80c:16ad:2f10 with SMTP id 00721157ae682-81e90150963mr74332187b3.33.1783972733384;
+        Mon, 13 Jul 2026 12:58:53 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1783972733; cv=pass;
+        d=google.com; s=arc-20260327;
+        b=BkHbtfjGnHg+s21ckfm0Il9FIrP878NdOlowZuJzziwaYZ7YFqDU7rpo2UVIjXcMax
+         S1aIXSb66AfZq0iRG/1vccfOqDWb2mmvnYsHpqp4/zN/+JqmDhoA1ofUHryJIzNcJft8
+         TX0znUlcgO/rMODN7QSrmMa5X/8r2rgD2iAv3hTTTuxYxcI9FUTh9/Eefx1DEj+prcwr
+         pyaOWSjfI5XNPl+aXUOP+kYwf4yqqYfp0gpjPcqUEz/zrBMERfBUwNjimryXZtXJ43QY
+         Oc0aVs6YQs4n1lKPL8ZzqjJKSIoB8K9M9B521kIf7RoZQxjUgoq4NQH6FHoHU3WU41aG
+         cKDg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=X2zUQPuihBEiTh5F/XB7xVAia8sx/XG0Y7yMSm1IZWw=;
+        fh=VKm8jrniWboL0Y3MTcAEDy7vCzkH7jF4zDQxUjnjprE=;
+        b=WtLn6rThrZrNXZvyMod701kpI7TlGzCCndkRUErGbF6IwODQNv0SA3RqXa9816rQoA
+         CUbGaUzuJbmHXd5uafjq397mpaFQAwKHzCY0tY4Nu1lx9aAbgFmqLRzeEs+CMueiIXRE
+         T1aoSY9MZCFZp/ol+MZa5lOJt5BLt4y6G2zymIjGK4f9PMDaMgYq3FDFhMsq0pT6lG2W
+         obVhoXuL7E3qpWtOnrb4PmrFWHavnQ00bnCoJXbdOtzv1heOcewS4O5J/Xqz5vkIgro6
+         jbzrLa4e8LwiK+7kFylW/soJtCistBS2s/Ur7YRKsknlJIeRmy4mW/Fi9PIuwD5f+IPl
+         xpSg==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20251104 header.b="e/kTilqU";
+       arc=pass (i=1);
+       spf=pass (google.com: domain of plant3576@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=plant3576@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@gmail.com
+Return-Path: <plant3576@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 00721157ae682-81cd62ccb42sor204395887b3.14.2026.07.13.12.58.52
+        for <natali.koifman@gmail.com>
+        (Google Transport Security);
+        Mon, 13 Jul 2026 12:58:53 -0700 (PDT)
+Received-SPF: pass (google.com: domain of plant3576@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20251104 header.b="e/kTilqU";
+       arc=pass (i=1);
+       spf=pass (google.com: domain of plant3576@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=plant3576@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=1; a=rsa-sha256; t=1783972732; cv=none;
+        d=google.com; s=arc-20260327;
+        b=hfl38tv6autsENuNPZB6wdLDiksPMevlYFB+xiDPG3W9PNiupHI84eEPdVKL6g950T
+         RXzi8EAxOzmatBwO/ykSCV5dA8hISPGk4KjUcmMH2+QuVCqNDCsqgGAKwQV4mbgZK93S
+         /oHiJnDzsMod1vfg6kEk1lhf/WbWKa4QEwHlzZ14Xexlc18Ebgg/KRdsADvVKh19+Qi1
+         56QgNJkpugpi4ezF7qDlTVkhqeHwSHC/6acJR6tno3Df5nzKTakVsleQ1dflovaZ7FC6
+         NNyPe3DWnE7LYfUfLPwCbhcxHNkD08cQX4+DMpsDKQie9LzybRweDXbSA+P/9bm2CUfS
+         mcfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=X2zUQPuihBEiTh5F/XB7xVAia8sx/XG0Y7yMSm1IZWw=;
+        fh=VKm8jrniWboL0Y3MTcAEDy7vCzkH7jF4zDQxUjnjprE=;
+        b=l7gSs7+yjFN/s1xocmF+SYBC6tBRxUfLH0x9jeK3SV4PIdZa23VCX2DGXSA/mHb7Lo
+         FkHD+z6HoktpSBCGUOlLC7KoKUJpGRjRm5XCPsAR0fI5+IGggbw/eYwo4htexlYEN9mH
+         QLrFHjZics0JxNDjIuVVeauuZYDo7yA52HSDIZq151RFfmmQomDpy7dVRJPw26I1dWGD
+         y5u5NRnyd5U5m9mtAvFwn17Og0WT3d/Nh3M8kfKUkjP+vRgF+X9DxsK3jg0fHkOlGgSO
+         vzRVqCmH0yjzqtA541lDqecqQIdp2vtGO3YkGukeTIYu0G0PaT7erCLXcKQqc5J3MdC9
+         ZCiQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783972732; x=1784577532; dara=google.com;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=X2zUQPuihBEiTh5F/XB7xVAia8sx/XG0Y7yMSm1IZWw=;
+        b=e/kTilqUONDKATI5JVykVT1MeKfIp1FxV79yyATGk8+iXO3IMCknfIAxVd04o4ifIx
+         oQv5w8dfza02Z8Z0Sbo1ZmhWRn4wOX4011zTO4Vh+WPQe2wRdkLOUYkbIfRq82VPUfyQ
+         P5AuRtzzp0gdgIbcccQyXgmT64AS37wHArH+l0q33+wMkSeI4GWMUGEYmeQvpMw65qYk
+         K+XsQAf0krKqhdZIubBYBFaDzqgVg0u0o2Re/DIKhBXM//Ib4F//NrBV2HjPmKgIT4NQ
+         H1FXL0SJSOV9ZpQvmpg853f/sO8HrSWK8Gz4zTm+RHdgg00NTBFw+G8p7W/xtBlWoZGm
+         sPSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783972732; x=1784577532;
+        h=content-transfer-encoding:content-type:to:subject:message-id:date
+         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=X2zUQPuihBEiTh5F/XB7xVAia8sx/XG0Y7yMSm1IZWw=;
+        b=eOcCvS6krWJbbRHWBrDImqEgaOVFPcs4ORaZv5QZ/csmr4C+0NnNXwSw5V+bS4OxOP
+         hErYyTVrplia0JnGSFc1TygiQYtCr2Xvwn+p3TS7Lybx9StljzkWfhdcyZPZiHKZ7DwW
+         b3dDZhXkYkMhgCCw3dkVecAIcRmf7LHwsVAEvEnO4FY7CBvvSQ/9FAqlMZ4GzCcx+xZP
+         3JxE3tlZolHRt+GJY1RcJoPlddmaMQCG6G4luaqYbaRS8Z2uSA1VtSF78KevPpe3nf0I
+         jTuZn6rmLaAI6tQXWZWWHkAqlAl8qOBaUAT5Vd4co+PSjgWaj9P9VwBTbr5NLZeSTWGF
+         Yi0w==
+X-Gm-Message-State: AOJu0YyghWZahbXSBI4h0SxLEvNY9GcpwOkgS1Xw0tC9xchsXYzL7tdZ
+	GgMWLgcd6nbdqzXnSVQwuAli/XMUpzOwU2q1Ya8SuHx72alIHrQkrhHc+bmg2lxu4z/Ga43t3o5
+	oqsuyxqagX55XjJkw8n4oq83fdScvfFhNaXSs
+X-Gm-Gg: AfdE7cnpC0h1lHTsy2gmK0+WN7Jw4NeoU1kOpQpGDLrIsZY+7M600hu8Tz6ugAyc2AT
+	o+mAZEgIXU3d6fl/Jr5VSld7G+P8E2v5Howidix1jktWzvLKZLiv6XWrFzuT6aPXcPaYIVzScSs
+	3KBGBAvn/oKQTP0ZQdupjDA5EDOq1+Nq79c/cFaGePbEHn+HJ0gz6dYZ9zc28ATEpcvmGIdnPqN
+	2QNtWZ/IuAWLtJDm2jD2QFCrtd2E4byxTaWgVKJRIs/gkItI5aULnW5t24dw7Krv4XWfJA=
+X-Received: by 2002:a05:690c:3747:b0:80c:4923:ced with SMTP id
+ 00721157ae682-81e901508b1mr80468577b3.41.1783972732382; Mon, 13 Jul 2026
+ 12:58:52 -0700 (PDT)
+Received: from 417756645566 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 13 Jul 2026 12:58:52 -0700
+Received: from 417756645566 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 13 Jul 2026 12:58:51 -0700
+MIME-Version: 1.0
+From: PLAN-T <plant3576@gmail.com>
+Date: Mon, 13 Jul 2026 12:58:51 -0700
+X-Gm-Features: AVVi8CcAZr-uhDlwHoTw_WKqyrc_hFWqwL8k9LJmYzyXA_b8Rna3IZ5HyIkkIVw
+Message-ID: <CAGZgd-uoSW2DeDYJZ0_fD5f1Ynq=BirP2CTNS04zAkUcBRSEzQ@mail.gmail.com>
+Subject: =?UTF-8?B?15TXlNeo16nXnteUINep15zXmiDXlNeq16fXkdec15Q=?=
+To: natali.koifman@gmail.com, natali@plan-t.org.il
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+16nXnNeV150gW0l0ZW0ncyBuYW1lXSwNCg0K16nXnteX15nXnSDXnNeR16nXqCDXnNeaINep15TX
+qNep157XqteaINec15DXmdeo15XXoiDXkNeV16nXqNeUIQ0KDQrXqteQ16jXmdeaINeU15TXk9eo
+15vXlDogW0l0ZW0ncyDXqteQ16jXmdeaINeU15PXqNeb15RdDQoNCteQ16DXkCDXqdee15XXqC/X
+mSDXotecINeU16rXkNeo15nXmiDXkdeZ15XXntefINep15zXmi4NCtec15vXnCDXqdeQ15zXlCwg
+15DXnCDXqteU16HXoS/XmSDXnNek16DXldeqINeQ15zXmdeg15UuDQo=
