@@ -1,0 +1,50 @@
+﻿{
+    "scenario":  {
+                     "id":  5603913,
+                     "name":  "Calendly -\u003e עדכון תאריך הדרכה במנדיי",
+                     "teamId":  1621766,
+                     "hookId":  2550785,
+                     "devices":  [
+
+                                 ],
+                     "deviceId":  null,
+                     "deviceScope":  null,
+                     "concept":  false,
+                     "description":  "",
+                     "folderId":  null,
+                     "slots":  null,
+                     "isinvalid":  false,
+                     "islinked":  true,
+                     "islocked":  false,
+                     "isPaused":  false,
+                     "usedPackages":  [
+                                          "calendly",
+                                          "monday",
+                                          "monday"
+                                      ],
+                     "lastEdit":  "2026-07-09T14:18:17.573Z",
+                     "scheduling":  {
+                                        "type":  "immediately",
+                                        "maximum_runs_per_minute":  100
+                                    },
+                     "iswaiting":  false,
+                     "dlqCount":  0,
+                     "allDlqCount":  0,
+                     "createdByUser":  {
+                                           "id":  6100228,
+                                           "name":  "PLAN-T",
+                                           "email":  "plant3576@gmail.com"
+                                       },
+                     "updatedByUser":  {
+                                           "id":  6100228,
+                                           "name":  "PLAN-T",
+                                           "email":  "plant3576@gmail.com"
+                                       },
+                     "nextExec":  null,
+                     "created":  "2026-07-08T09:44:16.110Z",
+                     "chainingRole":  "none",
+                     "type":  "scenario",
+                     "isShared":  false,
+                     "isActive":  true
+                 }
+}
