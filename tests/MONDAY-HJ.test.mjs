@@ -246,6 +246,49 @@ test('rejects invalid registration configuration before making a network request
   assert.equal(fetchCalls.length, 0);
 });
 
+test('supports the Wix GetSecretValueResponse object shape', async () => {
+  const { action, fetchCalls } = await loadAction({
+    secretsByName: {
+      [TOKEN_SECRET_NAME]: { value: 'rotated-test-token' },
+      [CONFIG_SECRET_NAME]: { value: JSON.stringify(REGISTRATION_CONFIG) }
+    }
+  });
+  const invoke = requireInvoke(action);
+
+  const result = await invoke(VALID_PAYLOAD, {});
+
+  assert.equal(Object.keys(result).length, 0);
+  assert.equal(fetchCalls.length, 1);
+  assert.equal(
+    fetchCalls[0].options.headers.Authorization,
+    'rotated-test-token'
+  );
+});
+
+test('rejects incomplete registration configuration before making a network request', async () => {
+  const incompleteConfig = {
+    ...REGISTRATION_CONFIG,
+    columns: {
+      ...REGISTRATION_CONFIG.columns
+    }
+  };
+  delete incompleteConfig.columns.email;
+
+  const { action, fetchCalls } = await loadAction({
+    secretsByName: {
+      [TOKEN_SECRET_NAME]: 'rotated-test-token',
+      [CONFIG_SECRET_NAME]: JSON.stringify(incompleteConfig)
+    }
+  });
+  const invoke = requireInvoke(action);
+
+  await assert.rejects(
+    () => invoke(VALID_PAYLOAD, {}),
+    /MONDAY_REGISTRATION_CONFIG.*columns\.email.*required/i
+  );
+  assert.equal(fetchCalls.length, 0);
+});
+
 test('rejects an HTTP failure without logging the token or upstream response body', async () => {
   const upstreamBody = 'upstream body that must not be logged';
   const { action, logs } = await loadAction({
@@ -280,5 +323,23 @@ test('rejects Monday GraphQL errors instead of reporting success', async () => {
   await assert.rejects(
     () => invoke(VALID_PAYLOAD, {}),
     /Monday GraphQL error.*Invalid column value/i
+  );
+});
+
+test('rejects a response that does not contain the created Monday item', async () => {
+  const { action } = await loadAction({
+    fetchResponse: mondayResponse({
+      jsonBody: {
+        data: {
+          create_item: null
+        }
+      }
+    })
+  });
+  const invoke = requireInvoke(action);
+
+  await assert.rejects(
+    () => invoke(VALID_PAYLOAD, {}),
+    /Monday response did not return a created item/i
   );
 });

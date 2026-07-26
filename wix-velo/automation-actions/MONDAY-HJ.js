@@ -34,22 +34,58 @@ function requireFullName(payload) {
   return fullName;
 }
 
+function unwrapSecretValue(secretResponse) {
+  if (typeof secretResponse === 'string') {
+    return secretResponse;
+  }
+  if (typeof secretResponse?.value === 'string') {
+    return secretResponse.value;
+  }
+  return '';
+}
+
+function requireConfigString(value, path) {
+  if (typeof value !== 'string' || value.trim() === '') {
+    throw new Error(`${CONFIG_SECRET_NAME} ${path} is required`);
+  }
+}
+
 function parseRegistrationConfig(rawConfig) {
+  let config;
   try {
-    return JSON.parse(rawConfig);
+    config = JSON.parse(rawConfig);
   } catch {
     throw new Error(`${CONFIG_SECRET_NAME} is invalid JSON`);
   }
+
+  requireConfigString(config?.boardId, 'boardId');
+  requireConfigString(config?.groupId, 'groupId');
+  requireConfigString(config?.columns?.phone, 'columns.phone');
+  requireConfigString(config?.columns?.email, 'columns.email');
+  requireConfigString(config?.columns?.company, 'columns.company');
+  requireConfigString(
+    config?.columns?.registrationDate,
+    'columns.registrationDate'
+  );
+  requireConfigString(config?.columns?.status, 'columns.status');
+  requireConfigString(config?.countryShortName, 'countryShortName');
+  if (!Number.isInteger(config?.statusIndex) || config.statusIndex < 0) {
+    throw new Error(`${CONFIG_SECRET_NAME} statusIndex is required`);
+  }
+
+  return config;
 }
 
 export async function invoke(payload, context) {
   const itemName = requireFullName(payload);
-  const mondayToken = await getSecretValue(TOKEN_SECRET_NAME);
+  const tokenResponse = await getSecretValue(TOKEN_SECRET_NAME);
+  const mondayToken = unwrapSecretValue(tokenResponse);
   if (typeof mondayToken !== 'string' || mondayToken.trim() === '') {
     throw new Error(`${TOKEN_SECRET_NAME} is missing`);
   }
 
-  const rawConfig = await getSecretValue(CONFIG_SECRET_NAME);
+  const configResponse = await getSecretValue(CONFIG_SECRET_NAME);
+  const rawConfig = unwrapSecretValue(configResponse);
   const config = parseRegistrationConfig(rawConfig);
   const email = payload['field:email'] || '';
   const columnValues = {
@@ -97,6 +133,9 @@ export async function invoke(payload, context) {
       .map((error) => error?.message || 'Unknown error')
       .join('; ');
     throw new Error(`Monday GraphQL error: ${messages}`);
+  }
+  if (!result?.data?.create_item?.id) {
+    throw new Error('Monday response did not return a created item');
   }
 
   return {};
