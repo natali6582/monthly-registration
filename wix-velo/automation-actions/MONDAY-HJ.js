@@ -1,44 +1,103 @@
-// Isolated working copy of the current Wix action.
-// RED baseline only: no repair has been applied.
 import { fetch } from 'wix-fetch';
+import { secrets } from 'wix-secrets-backend.v2';
+import { elevate } from 'wix-auth';
 
-export async function createMondayItem(formData) {
-  const API_KEY = "REDACTED_COMPROMISED_TOKEN";
-  const BOARD_ID = 5099813594;
-  const GROUP_ID = "group_mm50r2qx";
+const MONDAY_ENDPOINT = 'https://api.monday.com/v2';
+const TOKEN_SECRET_NAME = 'MONDAY_API_TOKEN';
+const CONFIG_SECRET_NAME = 'MONDAY_REGISTRATION_CONFIG';
+const getSecretValue = elevate(secrets.getSecretValue);
 
-  const columnValues = JSON.stringify({
-    "phone_mm50904s":  { "phone": formData['field:phone'] || "", "countryShortName": "IL" },
-    "email_mm50jkhy":  { "email": formData['field:email'] || "", "text": formData['field:email'] || "" },
-    "text_mm50vwsm":   formData['field:company'] || "",
-    "date_mm50szvs":   { "date": new Date().toISOString().split("T")[0] },
-    "color_mm50rkbq":  { "index": 7 }
-  });
-
-  const mutation = `
-    mutation {
-      create_item(
-        board_id: ${BOARD_ID},
-        group_id: "${GROUP_ID}",
-        item_name: "${formData['field:fullName']}",
-        column_values: ${JSON.stringify(columnValues)}
-      ) {
-        id
-        name
-      }
+const CREATE_REGISTRATION_ITEM = `
+  mutation CreateRegistrationItem(
+    $boardId: ID!
+    $groupId: String!
+    $itemName: String!
+    $columnValues: JSON!
+  ) {
+    create_item(
+      board_id: $boardId
+      group_id: $groupId
+      item_name: $itemName
+      column_values: $columnValues
+    ) {
+      id
+      name
     }
-  `;
+  }
+`;
 
-  const response = await fetch("https://api.monday.com/v2", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": API_KEY
+function requireFullName(payload) {
+  const fullName = payload?.['field:fullName'];
+  if (typeof fullName !== 'string' || fullName.trim() === '') {
+    throw new Error('field:fullName is required');
+  }
+  return fullName;
+}
+
+function parseRegistrationConfig(rawConfig) {
+  try {
+    return JSON.parse(rawConfig);
+  } catch {
+    throw new Error(`${CONFIG_SECRET_NAME} is invalid JSON`);
+  }
+}
+
+export async function invoke(payload, context) {
+  const itemName = requireFullName(payload);
+  const mondayToken = await getSecretValue(TOKEN_SECRET_NAME);
+  if (typeof mondayToken !== 'string' || mondayToken.trim() === '') {
+    throw new Error(`${TOKEN_SECRET_NAME} is missing`);
+  }
+
+  const rawConfig = await getSecretValue(CONFIG_SECRET_NAME);
+  const config = parseRegistrationConfig(rawConfig);
+  const email = payload['field:email'] || '';
+  const columnValues = {
+    [config.columns.phone]: {
+      phone: payload['field:phone'] || '',
+      countryShortName: config.countryShortName
     },
-    body: JSON.stringify({ query: mutation })
+    [config.columns.email]: {
+      email,
+      text: email
+    },
+    [config.columns.company]: payload['field:company'] || '',
+    [config.columns.registrationDate]: {
+      date: new Date().toISOString().split('T')[0]
+    },
+    [config.columns.status]: {
+      index: config.statusIndex
+    }
+  };
+
+  const response = await fetch(MONDAY_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: mondayToken
+    },
+    body: JSON.stringify({
+      query: CREATE_REGISTRATION_ITEM,
+      variables: {
+        boardId: config.boardId,
+        groupId: config.groupId,
+        itemName,
+        columnValues: JSON.stringify(columnValues)
+      }
+    })
   });
+
+  if (!response.ok) {
+    throw new Error(`Monday request failed: HTTP ${response.status}`);
+  }
 
   const result = await response.json();
-  console.log("Monday item created:", result);
-  return result;
+  if (Array.isArray(result.errors) && result.errors.length > 0) {
+    const messages = result.errors
+      .map((error) => error?.message || 'Unknown error')
+      .join('; ');
+    throw new Error(`Monday GraphQL error: ${messages}`);
+  }
+
+  return {};
 }

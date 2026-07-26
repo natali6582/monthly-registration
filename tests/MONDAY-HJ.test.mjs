@@ -170,7 +170,10 @@ test('maps the Wix form payload through GraphQL variables and returns an empty o
 
   const result = await invoke(VALID_PAYLOAD, { invocationId: 'test-invocation' });
 
-  assert.deepEqual(result, {});
+  assert.equal(typeof result, 'object');
+  assert.notEqual(result, null);
+  assert.equal(Array.isArray(result), false);
+  assert.deepEqual(Object.keys(result), []);
   assert.deepEqual(secretReads, [TOKEN_SECRET_NAME, CONFIG_SECRET_NAME]);
   assert.equal(fetchCalls.length, 1);
   assert.equal(fetchCalls[0].url, MONDAY_ENDPOINT);
