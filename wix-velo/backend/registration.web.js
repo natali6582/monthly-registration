@@ -48,7 +48,6 @@ function normalizeRegistration(form) {
   assertField('company', payload.company);
   assertField('email', payload.email);
   assertField('phone', payload.phone);
-  assertField('training_focus', payload.training_focus);
   assertField('selected_topics', payload.selected_topics);
   assertEmail(payload.email);
 
