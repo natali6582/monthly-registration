@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>הרשמה לאירוע חשיפת נבחרת המומחים של PLAN T</title>
+  <style>
+    :root {
+      --ink: #243f59;
+      --muted: #536b80;
+      --blue: #0879cf;
+      --blue-dark: #0666ae;
+      --line: #d9e3eb;
+      --error: #a72b37;
+      font-family: Arial, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #f7fafc;
+      font-synthesis: none;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 0; }
+    button, input { font: inherit; }
+    button, a, input { -webkit-tap-highlight-color: transparent; }
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 3px solid #164f87; outline-offset: 4px; }
+    main { padding: 48px 24px 32px; }
+    body.is-embedded main { padding: 24px 16px; }
+    body.is-embedded .preview-label, body.is-embedded .preview-note { display: none; }
+    .preview-label {
+      width: fit-content;
+      margin: 0 auto 20px;
+      padding: 7px 14px;
+      color: #53697c;
+      border: 1px solid #dce6ed;
+      border-radius: 99px;
+      background: #fff;
+      font-size: 13px;
+    }
+    .event-card {
+      max-width: 820px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #e2ebf1;
+      border-radius: 22px;
+      box-shadow: 0 12px 44px #284d7010, 0 2px 8px #284d7006;
+    }
+    .hero {
+      padding: 30px 42px 32px;
+      background: linear-gradient(112deg, #b7dbe9 0%, #bddfdc 47%, #b8d899 100%);
+      border-bottom: 1px solid #d6e4dc;
+      text-align: center;
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+    .brand {
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      direction: ltr;
+    }
+    .eyebrow {
+      padding: 7px 12px;
+      background: #ffffffa6;
+      border: 1px solid #ffffffb3;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    h1 {
+      max-width: 660px;
+      margin: 0 auto;
+      font-size: clamp(27px, 3.7vw, 36px);
+      font-weight: 700;
+      line-height: 1.35;
+      text-wrap: balance;
+    }
+    .intro {
+      max-width: 580px;
+      margin: 14px auto 0;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .event-details {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-top: 23px;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .detail { display: inline-flex; align-items: center; gap: 7px; }
+    .detail svg { width: 18px; height: 18px; flex: 0 0 auto; }
+    .separator { width: 1px; height: 17px; background: #718e8799; }
+    .card-body { padding: 32px 42px 28px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 23px 22px; }
+    .field { min-width: 0; }
+    .field-wide { grid-column: 1 / -1; }
+    label { display: block; margin-bottom: 9px; font-size: 15px; font-weight: 700; }
+    .required { color: #58738a; margin-inline-start: 3px; }
+    input {
+      display: block;
+      width: 100%;
+      min-height: 53px;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: #1d3449;
+      font-size: 16px;
+      line-height: 1.45;
+      transition: border-color 150ms, box-shadow 150ms;
+    }
+    input::placeholder { color: #627589; opacity: 1; }
+    input[dir="ltr"] { text-align: right; }
+    input:hover { border-color: #a5bbc9; }
+    input:focus { border-color: var(--blue); outline: 0; box-shadow: 0 0 0 3px #0879cf20; }
+    input[aria-invalid="true"] { border-color: var(--error); }
+    input[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px #a72b3719; }
+    .field-error { margin: 7px 0 0; color: var(--error); font-size: 13px; line-height: 1.5; }
+    .form-note { margin: 24px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .primary {
+      display: flex;
+      width: 100%;
+      min-height: 54px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 3px 7px #0879cf1a;
+      transition: background 150ms;
+    }
+    .primary:hover { background: var(--blue-dark); }
+    .primary:disabled { opacity: .7; cursor: wait; }
+    .primary svg { width: 19px; height: 19px; flex: 0 0 auto; }
+    .submission-feedback { margin: 0 0 18px; padding: 12px 14px; border: 1px solid #e4bec4; border-radius: 8px; color: var(--error); background: #fff7f8; font-size: 14px; line-height: 1.7; }
+    .footnote { margin: 16px 0 0; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.7; }
+    .next-step { padding: 3px 0 4px; text-align: center; }
+    .check {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 17px;
+      border: 1px solid #bfd6c5;
+      border-radius: 50%;
+      background: #edf6ee;
+      color: #28703b;
+    }
+    .check svg { width: 25px; height: 25px; }
+    .next-step h2 { margin: 0; font-size: 23px; line-height: 1.5; }
+    .next-step p { max-width: 500px; margin: 12px auto 24px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+    .secondary { margin-top: 17px; min-height: 44px; padding: 10px 18px; border: 0; background: none; color: #176da7; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+    .preview-note { max-width: 760px; margin: 20px auto 0; color: #5e7182; font-size: 13px; text-align: center; line-height: 1.8; }
+    @media (max-width: 560px) {
+      main { padding: 22px 16px 24px; }
+      .preview-label { margin-bottom: 14px; }
+      .event-card { border-radius: 17px; }
+      .hero { padding: 23px 21px 27px; }
+      .brand-row { margin-bottom: 23px; gap: 10px; }
+      .brand { font-size: 21px; }
+      .eyebrow { font-size: 12px; padding: 6px 10px; }
+      h1 { font-size: 27px; }
+      .intro { font-size: 15px; }
+      .event-details { gap: 9px 11px; font-size: 14px; margin-top: 20px; }
+      .separator { display: none; }
+      .card-body { padding: 25px 21px 23px; }
+      .form-grid { grid-template-columns: 1fr; gap: 20px; }
+      .field-wide { grid-column: auto; }
+      .form-note { margin-top: 23px; }
+    }
+    @media (prefers-reduced-motion: reduce) { input, .primary { transition: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="preview-label">תצוגה מקדימה</p>
+    <article class="event-card" aria-labelledby="event-title">
+      <header class="hero">
+        <div class="brand-row">
+          <span class="eyebrow">אירוע חשיפה · אונליין</span>
+          <span class="brand" lang="en">PLAN T</span>
+        </div>
+        <h1 id="event-title">הרשמה לאירוע חשיפת נבחרת המומחים של <bdi lang="en">PLAN T</bdi></h1>
+        <p class="intro">מלאו את הפרטים והמשיכו להשלמת ההרשמה לאירוע.</p>
+        <div class="event-details" aria-label="יום שלישי, 10 בנובמבר 2026, בשעה 11:00 לפי שעון ישראל">
+          <span class="detail">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 11h16"/></svg>
+            יום שלישי, <time datetime="2026-11-10"><bdi>10.11.2026</bdi></time>
+          </span>
+          <span class="separator" aria-hidden="true"></span>
+          <span class="detail">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <time datetime="2026-11-10T11:00:00+02:00"><bdi>11:00</bdi></time> · שעון ישראל
+          </span>
+        </div>
+      </header>
+      <div class="card-body">
+        <form id="registration-form" novalidate aria-describedby="form-note">
+          <div class="form-grid">
+            <div class="field field-wide">
+              <label for="full-name">שם מלא<span class="required" aria-hidden="true">*</span></label>
+              <input id="full-name" name="name" type="text" autocomplete="name" placeholder="השם המלא שלכם" minlength="2" maxlength="100" required aria-describedby="name-error" aria-invalid="false">
+              <p class="field-error" id="name-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="phone">טלפון<span class="required" aria-hidden="true">*</span></label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" dir="ltr" placeholder="מספר הטלפון שלכם" maxlength="25" required aria-describedby="phone-error" aria-invalid="false">
+              <p class="field-error" id="phone-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="email">מייל<span class="required" aria-hidden="true">*</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" dir="ltr" placeholder="כתובת המייל שלכם" maxlength="254" required aria-describedby="email-error" aria-invalid="false">
+              <p class="field-error" id="email-error" hidden></p>
+            </div>
+          </div>
+          <p id="form-note" class="form-note">להשלמת ההרשמה ולקבלת זימון ליומן, יש להמשיך לאישור המועד במסך הבא.</p>
+          <p id="submission-feedback" class="submission-feedback" role="alert" tabindex="-1" hidden></p>
+          <button class="primary" type="submit">
+            <span id="submit-label">המשך להרשמה לוובינר</span>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+          </button>
+          <p class="footnote">פרטי ההצטרפות לוובינר יישלחו לאחר אישור ההרשמה ב־Calendly.</p>
+        </form>
+        <section id="next-step" class="next-step" aria-labelledby="next-title" tabindex="-1" hidden>
+          <div class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></div>
+          <h2 id="next-title">ממשיכים להשלמת ההרשמה</h2>
+          <p id="next-description">הפרטים תקינים. להשלמת ההרשמה וקבלת הזימון ליומן, עברו למסך ההרשמה ב־Calendly ואשרו את המועד.</p>
+          <a class="primary" id="calendly-link" href="https://calendly.com/supportclient-plan-t/plan-t-10-11-2026-11-00" target="_blank" rel="noopener noreferrer">להשלמת ההרשמה ב־Calendly</a>
+          <button class="secondary" id="edit-details" type="button">חזרה לעריכת הפרטים</button>
+        </section>
+      </div>
+    </article>
+    <p class="preview-note">תצוגה מקדימה בלבד — הפרטים אינם נשמרים ולא נשלחים מיילים.</p>
+  </main>
+  <script>
+    (() => {
+      "use strict";
+      const form = document.getElementById("registration-form");
+      const nextStep = document.getElementById("next-step");
+      const fields = Array.from(form.querySelectorAll("input"));
+      const submitButton = form.querySelector('button[type="submit"]');
+      const submitLabel = document.getElementById("submit-label");
+      const feedback = document.getElementById("submission-feedback");
+      const calendlyUrl = "https://calendly.com/supportclient-plan-t/plan-t-10-11-2026-11-00";
+      const parentOrigins = new Set([
+        "https://www.plan-t.org.il",
+        "https://plan-t.org.il",
+        "https://lihi45-plan-t.editor.wix.com"
+      ]);
+      const standalone = window.parent === window;
+      let bridgeOrigin = null;
+      let pendingRequestId = null;
+      let pendingTimeout;
+      let handshakeTimer;
+
+      if (!standalone) document.body.classList.add("is-embedded");
+
+      function announceReady() {
+        if (standalone || bridgeOrigin) return;
+        let referrerOrigin = null;
+        try { referrerOrigin = new URL(document.referrer).origin; } catch (error) { /* No usable referrer. */ }
+        const targets = parentOrigins.has(referrerOrigin) ? [referrerOrigin] : Array.from(parentOrigins);
+        targets.forEach((origin) => window.parent.postMessage({ type: "plan-t:experts:ready" }, origin));
+      }
+
+      function unlockSubmission() {
+        clearTimeout(pendingTimeout);
+        pendingRequestId = null;
+        submitButton.disabled = false;
+        submitButton.removeAttribute("aria-busy");
+        submitLabel.textContent = "המשך להרשמה לוובינר";
+      }
+
+      function showSubmissionError(message) {
+        feedback.textContent = message;
+        feedback.hidden = false;
+        feedback.focus();
+      }
+
+      function showNextStep(queued) {
+        document.getElementById("next-title").textContent = queued ? "הבקשה נשלחה לעיבוד" : "ממשיכים להשלמת ההרשמה";
+        document.getElementById("next-description").textContent = queued
+          ? "להשלמת ההרשמה וקבלת הזימון ליומן, עברו למסך ההרשמה ב־Calendly ואשרו את המועד."
+          : "הפרטים תקינים. להשלמת ההרשמה וקבלת הזימון ליומן, עברו למסך ההרשמה ב־Calendly ואשרו את המועד.";
+        document.getElementById("calendly-link").href = calendlyUrl;
+        form.hidden = true;
+        nextStep.hidden = false;
+        nextStep.focus();
+      }
+
+      window.addEventListener("message", (event) => {
+        if (standalone || event.source !== window.parent || !parentOrigins.has(event.origin)) return;
+        const message = event.data;
+        if (!message || typeof message !== "object" || Array.isArray(message)) return;
+        if (message.type === "plan-t:experts:ready-ack") {
+          bridgeOrigin = event.origin;
+          clearInterval(handshakeTimer);
+          return;
+        }
+        if (message.type !== "plan-t:experts:result" || !pendingRequestId || message.requestId !== pendingRequestId) return;
+        if (event.origin !== bridgeOrigin) return;
+        unlockSubmission();
+        if (message.status === "queued" && message.calendlyUrl === calendlyUrl) {
+          showNextStep(true);
+        } else if (message.status === "invalid") {
+          showSubmissionError("יש לבדוק את הפרטים שהוזנו ולנסות שוב.");
+        } else if (message.status === "unknown") {
+          showSubmissionError("לא התקבלה תשובה סופית. ייתכן שהבקשה נקלטה; אפשר להמתין רגע ולבדוק את המייל לפני ניסיון נוסף.");
+        } else {
+          showSubmissionError("לא ניתן לשלוח כרגע את הפרטים. נסו שוב בעוד רגע.");
+        }
+      });
+
+      if (!standalone) {
+        window.addEventListener("load", announceReady, { once: true });
+        announceReady();
+        let attempts = 0;
+        handshakeTimer = setInterval(() => {
+          attempts += 1;
+          announceReady();
+          if (bridgeOrigin || attempts >= 30) clearInterval(handshakeTimer);
+        }, 1000);
+      }
+
+      window.addEventListener("pagehide", () => {
+        clearInterval(handshakeTimer);
+        clearTimeout(pendingTimeout);
+      });
+
+      function getError(field) {
+        const value = field.value.trim();
+        if (!value) {
+          return { name: "יש למלא שם מלא.", phone: "יש למלא מספר טלפון.", email: "יש למלא כתובת מייל." }[field.name];
+        }
+        if (field.name === "name" && value.length < 2) return "יש להזין שם בן שני תווים לפחות.";
+        if (field.name === "phone") {
+          const digits = value.replace(/[\s()+.\-]/g, "");
+          if (!/^\d{9,15}$/.test(digits)) return "יש להזין מספר טלפון תקין, כולל קידומת.";
+        }
+        if (field.name === "email" && (field.validity.typeMismatch || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))) {
+          return "יש להזין כתובת מייל תקינה.";
+        }
+        return "";
+      }
+
+      function validateField(field) {
+        const message = getError(field);
+        const error = document.getElementById(field.getAttribute("aria-describedby"));
+        error.textContent = message;
+        error.hidden = !message;
+        field.setAttribute("aria-invalid", String(Boolean(message)));
+        return !message;
+      }
+
+      fields.forEach((field) => {
+        field.addEventListener("input", () => {
+          if (field.getAttribute("aria-invalid") === "true") validateField(field);
+        });
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (pendingRequestId) return;
+        feedback.hidden = true;
+        const invalidFields = fields.filter((field) => !validateField(field));
+        if (invalidFields.length) {
+          invalidFields[0].focus();
+          return;
+        }
+        if (standalone) {
+          showNextStep(false);
+          return;
+        }
+        if (!bridgeOrigin) {
+          announceReady();
+          showSubmissionError("הטופס עדיין אינו זמין לשליחה. נסו לרענן את העמוד בעוד רגע.");
+          return;
+        }
+        const requestId = crypto.randomUUID();
+        pendingRequestId = requestId;
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+        submitLabel.textContent = "שליחת הפרטים…";
+        pendingTimeout = setTimeout(() => {
+          if (pendingRequestId !== requestId) return;
+          unlockSubmission();
+          showSubmissionError("לא התקבלה תשובה סופית. ייתכן שהבקשה נקלטה; אפשר להמתין רגע ולבדוק את המייל לפני ניסיון נוסף.");
+        }, 35000);
+        window.parent.postMessage({
+          type: "plan-t:experts:submit",
+          requestId,
+          name: fields[0].value.trim(),
+          phone: fields[1].value.trim(),
+          email: fields[2].value.trim().toLowerCase()
+        }, bridgeOrigin);
+      });
+
+      document.getElementById("edit-details").addEventListener("click", () => {
+        nextStep.hidden = true;
+        form.hidden = false;
+        fields[0].focus();
+      });
+    })();
+  </script>
+</body>
+</html>
