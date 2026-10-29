@@ -64,7 +64,10 @@ export const submitDirectExpertRegistration = webMethod(Permissions.Anyone, asyn
   if (!registration) return { status: "invalid" };
   const cancelToken = randomBytes(32).toString("hex");
   const result = await post(INTAKE_SECRET, { ...registration, cancelToken, source: "experts-webinar-direct" });
-  if (result.status === "registered" && /^plan-t-experts-20261110-\d+@plan-t\.org\.il$/.test(result.calendarUid || "")) {
+  if (result.status === "registered" && result.deliveryMode === "outlook" && Object.keys(result).sort().join(",") === "deliveryMode,status") {
+    return { status: "registered", deliveryMode: "outlook", joinUrl: JOIN_URL };
+  }
+  if (result.status === "registered" && result.deliveryMode === undefined && /^plan-t-experts-20261110-\d+@plan-t\.org\.il$/.test(result.calendarUid || "")) {
     return { status: "registered", joinUrl: JOIN_URL, calendarIcs: calendar(result.calendarUid) };
   }
   return { status: ["already_received", "invalid", "email_error", "error", "unknown"].includes(result.status) ? result.status : "unknown" };

@@ -1,7 +1,9 @@
 {
   "scenarioId": 6823178,
-  "status": "active",
-  "lastEdit": "2026-10-29T11:12:59.635Z",
-  "moduleCount": 16,
-  "snapshotPurpose": "Pre-Outlook-invitation rollback checkpoint; no invitation mode enabled"
+  "statusAtSnapshot": "active",
+  "lastEdit": "2026-10-29T18:26:33.818Z",
+  "moduleCount": 19,
+  "exportAutoActivate": false,
+  "sourceOnly": true,
+  "privateZoomUrlRequiredBeforeDeployment": true
 }

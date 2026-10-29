@@ -59,7 +59,7 @@
         },
         "mapper": {
           "method": "POST",
-          "queryBody": "query FindDirectRegistration($token: String!) { items_page_by_column_values(board_id:5106887275, limit:2, columns:[{column_id:\"cancel_token_hash\",column_values:[$token]}]) { items { id board { id } group { id } status: column_values(ids:[\"registration_status\"]) { ... on StatusValue { index } } token: column_values(ids:[\"cancel_token_hash\"]) { text } } } }",
+          "queryBody": "query FindDirectRegistration($token: String!) { items_page_by_column_values(board_id:5106887275, limit:2, columns:[{column_id:\"cancel_token_hash\",column_values:[$token]}]) { items { id board { id } group { id } status: column_values(ids:[\"registration_status\"]) { ... on StatusValue { index } } token: column_values(ids:[\"cancel_token_hash\"]) { text } mode: column_values(ids:[\"text_mm8k8aa8\"]) {text} event: column_values(ids:[\"text_mm8khswv\"]) {text} email: column_values(ids:[\"email\"]) {... on EmailValue {text email}} } } }",
           "variables": {
             "token": "{{1.tokenHash}}"
           },
@@ -183,10 +183,10 @@
       }
     },
     {
-      "id": 8,
-      "module": "monday:ExecuteGraphQLQueryV2",
+      "id": 17,
+      "module": "scenario-service:CallSubscenario",
       "version": 2,
-      "label": "Cancel isolated registration",
+      "label": "Cancel matching Outlook invitation or preserve legacy behavior",
       "parent": {
         "moduleId": 5,
         "kind": "route",
@@ -233,6 +233,51 @@
               "a": "{{ifempty(3.body.data.items_page_by_column_values.items[1].status[1].index; -1)}}",
               "b": "2",
               "o": "number:notequal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "parameters": {
+          "scenario": "SCN_6828325",
+          "shouldWaitForExecutionEnd": true
+        },
+        "mapper": {
+          "data": {
+            "mode": "{{3.body.data.items_page_by_column_values.items[1].mode[1].text}}",
+            "email": "{{3.body.data.items_page_by_column_values.items[1].email[1].text}}",
+            "rowId": "{{3.body.data.items_page_by_column_values.items[1].id}}",
+            "eventId": "{{3.body.data.items_page_by_column_values.items[1].event[1].text}}"
+          }
+        }
+      }
+    },
+    {
+      "id": 20,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "label": "Calendar cancellation result",
+      "follows": 17,
+      "config": {}
+    },
+    {
+      "id": 8,
+      "module": "monday:ExecuteGraphQLQueryV2",
+      "version": 2,
+      "label": "Cancel isolated registration",
+      "parent": {
+        "moduleId": 20,
+        "kind": "route",
+        "index": 0
+      },
+      "filter": {
+        "name": "Calendar step confirmed",
+        "conditions": [
+          [
+            {
+              "a": "{{17.status}}",
+              "b": "confirmed",
+              "o": "text:equal"
             }
           ]
         ]
@@ -287,20 +332,20 @@
       "config": {}
     },
     {
-      "id": 12,
+      "id": 21,
       "module": "builtin:BasicRouter",
       "version": 1,
-      "label": "Verify cancellation write",
+      "label": "Verify Monday cancellation status",
       "follows": 8,
       "config": {}
     },
     {
-      "id": 14,
+      "id": 22,
       "module": "gateway:WebhookRespond",
       "version": 1,
       "label": "Cancellation confirmed",
       "parent": {
-        "moduleId": 12,
+        "moduleId": 21,
         "kind": "route",
         "index": 0
       },
@@ -354,12 +399,12 @@
       }
     },
     {
-      "id": 15,
+      "id": 23,
       "module": "gateway:WebhookRespond",
       "version": 1,
       "label": "Cancellation verification failed",
       "parent": {
-        "moduleId": 12,
+        "moduleId": 21,
         "kind": "route",
         "index": 1
       },
@@ -405,6 +450,45 @@
               "a": "{{ifempty(8.body.data.change_multiple_column_values.status[1].index; -1)}}",
               "b": "2",
               "o": "number:notequal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"error\"}",
+          "status": 500,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 19,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Calendar cancellation not confirmed",
+      "parent": {
+        "moduleId": 20,
+        "kind": "route",
+        "index": 1
+      },
+      "filter": {
+        "name": "Calendar step unconfirmed",
+        "conditions": [
+          [
+            {
+              "a": "{{ifempty(17.status; emptystring)}}",
+              "b": "confirmed",
+              "o": "text:notequal"
             }
           ]
         ]

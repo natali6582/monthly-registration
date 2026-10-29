@@ -1,3 +1,11 @@
+"""Build webinar email assets without sending mail.
+
+The default ``ics`` mode preserves the legacy email and calendar attachment.
+The ``outlook`` mode emits only the styled email: Make must send the separate
+Outlook calendar invitation before sending this confirmation. No ICS attachment
+is generated in that mode, and cancellation must also cancel the invitation.
+"""
+
 import argparse
 import html
 import json
@@ -15,7 +23,9 @@ def fold(line):
     return "\r\n".join(parts + [current])
 
 
-def build(event_path, module_id, output):
+def build(event_path, module_id, output, delivery_mode="ics"):
+    if delivery_mode not in ("ics", "outlook"):
+        raise ValueError("delivery_mode must be 'ics' or 'outlook'")
     event = json.loads(event_path.read_text(encoding="utf-8"))
     row = "{{" + str(module_id) + ".id}}"
     lines = [
@@ -88,14 +98,29 @@ def build(event_path, module_id, output):
 <!--[if mso]></td></tr></table><![endif]-->
 </td></tr></table></body></html>
 '''
+    if delivery_mode == "outlook":
+        calendar_copy = {
+            "הוספה ליומן Outlook או Google": "הזמנה ליומן",
+            "פתחו את קובץ היומן המצורף למייל.": "הזמנה ליומן נשלחה אליכם במייל נפרד.",
+            "ייתכן שיידרש אישור להוספת האירוע ביומן שלכם.": "לאישור ההשתתפות ולהוספה ליומן, פתחו את ההזמנה ואשרו אותה.",
+            "אם הוספתם את האירוע ליומן, לאחר ביטול ההרשמה יש להסיר אותו גם מהיומן.": "ביטול ההרשמה דרך הקישור ישלח אליכם גם הודעת ביטול להזמנה ביומן.",
+        }
+        for original, replacement in calendar_copy.items():
+            if email.count(original) != 1:
+                raise ValueError("Expected exactly one legacy calendar instruction")
+            email = email.replace(original, replacement)
     output.mkdir(parents=True, exist_ok=False)
-    (output / "calendar-template.ics.txt").write_bytes(ics.encode("utf-8"))
+    if delivery_mode == "ics":
+        (output / "calendar-template.ics.txt").write_bytes(ics.encode("utf-8"))
     (output / "email-template.html").write_bytes(email.encode("utf-8"))
     sample = ics.replace(row, "3317000000").replace('{{formatDate(now; "YYYYMMDD[T]HHmmss[Z]"; "UTC")}}', "20261029T110000Z")
     assert all(len(line.encode("utf-8")) <= 75 for line in sample.split("\r\n"))
     assert "ATTENDEE" not in sample and "ORGANIZER:mailto:sales@plan-t.org.il" in sample
     assert "Calendly" not in email and "calendly.com" not in email
-    print(json.dumps({"files": 2, "calendar_bytes": len(ics.encode("utf-8")), "preview_markers": False}))
+    if delivery_mode == "ics":
+        print(json.dumps({"files": 2, "calendar_bytes": len(ics.encode("utf-8")), "preview_markers": False}))
+    else:
+        print(json.dumps({"files": 1, "delivery_mode": "outlook", "calendar_attachment": False, "separate_calendar_invitation_required": True, "preview_markers": False}))
 
 
 def main():
@@ -103,8 +128,9 @@ def main():
     parser.add_argument("--event", type=Path, required=True)
     parser.add_argument("--row-module", type=int, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--delivery-mode", choices=("ics", "outlook"), default="ics")
     args = parser.parse_args()
-    build(args.event, args.row_module, args.output)
+    build(args.event, args.row_module, args.output, args.delivery_mode)
 
 
 if __name__ == "__main__":

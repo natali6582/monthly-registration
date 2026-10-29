@@ -5,9 +5,6 @@
   "scheduling": {
     "type": "immediately"
   },
-  "settings": {
-    "sequential": false
-  },
   "modules": [
     {
       "id": 1,
@@ -22,11 +19,138 @@
       }
     },
     {
+      "id": 16,
+      "module": "util:SetVariable2",
+      "version": 1,
+      "label": "Delivery mode — outlook or ics (rollback)",
+      "follows": 1,
+      "config": {
+        "mapper": {
+          "name": "deliveryMode",
+          "value": "outlook"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "label": "Webinar delivery mode",
+      "follows": 16,
+      "config": {}
+    },
+    {
+      "id": 18,
+      "module": "scenario-service:CallSubscenario",
+      "version": 2,
+      "label": "Serialized Outlook invitation registration",
+      "parent": {
+        "moduleId": 17,
+        "kind": "route",
+        "index": 0
+      },
+      "filter": {
+        "name": "Outlook calendar invitations",
+        "conditions": [
+          [
+            {
+              "a": "{{16.deliveryMode}}",
+              "b": "outlook",
+              "o": "text:equal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "parameters": {
+          "scenario": "SCN_6828265",
+          "shouldWaitForExecutionEnd": true
+        },
+        "mapper": {
+          "data": {
+            "name": "{{1.name}}",
+            "email": "{{1.email}}",
+            "phone": "{{1.phone}}",
+            "source": "{{1.source}}",
+            "cancelToken": "{{1.cancelToken}}"
+          }
+        }
+      }
+    },
+    {
+      "id": 20,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Registration worker unavailable",
+      "parent": {
+        "moduleId": 18,
+        "kind": "errorHandler"
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"unknown\"}",
+          "status": 503,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 21,
+      "module": "builtin:Commit",
+      "version": 1,
+      "follows": 20,
+      "config": {}
+    },
+    {
+      "id": 19,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Return registration worker result",
+      "follows": 18,
+      "config": {
+        "mapper": {
+          "body": "{{18.response}}",
+          "status": 200,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
       "id": 2,
       "module": "builtin:BasicIfElse",
       "version": 1,
       "label": "בדיקת פרטי ההרשמה",
-      "follows": 1,
+      "parent": {
+        "moduleId": 17,
+        "kind": "route",
+        "index": 1
+      },
+      "filter": {
+        "name": "Legacy ICS delivery for rollback",
+        "conditions": [
+          [
+            {
+              "a": "{{16.deliveryMode}}",
+              "b": "ics",
+              "o": "text:equal"
+            }
+          ]
+        ]
+      },
       "config": {}
     },
     {
@@ -458,5 +582,8 @@
         }
       }
     }
-  ]
+  ],
+  "settings": {
+    "sequential": false
+  }
 }

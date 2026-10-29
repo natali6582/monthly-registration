@@ -1,11 +1,14 @@
 {
   "scenarioId": 6823179,
-  "status": "active",
-  "lastEdit": "2026-10-29T16:55:35.634Z",
-  "boardId": "5106887275",
-  "groupId": "topics",
-  "mailConnection": 6649321,
-  "mondayConnection": 9828370,
-  "defaultFlowPreserved": true,
-  "webhookStoredInWixSecret": "PLAN_T_EXPERTS_DIRECT_INTAKE_URL"
+  "statusAtSnapshot": "active",
+  "lastEdit": "2026-10-29T18:28:02.695Z",
+  "moduleCount": 21,
+  "exportAutoActivate": false,
+  "sourceOnly": true,
+  "privateZoomUrlRequiredBeforeDeployment": true,
+  "deliveryMode": "outlook",
+  "icsRollbackModuleId": 16,
+  "verifiedSettings": {
+    "sequential": false
+  }
 }

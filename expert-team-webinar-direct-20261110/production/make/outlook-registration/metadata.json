@@ -1,0 +1,14 @@
+{
+  "scenarioId": 6828265,
+  "statusAtSnapshot": "active",
+  "lastEdit": "2026-10-29T18:22:29.526Z",
+  "moduleCount": 21,
+  "exportAutoActivate": false,
+  "sourceOnly": true,
+  "privateZoomUrlRequiredBeforeDeployment": true,
+  "organizerEmailGuardRequiresConfiguration": true,
+  "verifiedSettings": {
+    "sequential": true,
+    "dlq": false
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "name": "PLAN-T | Webinar Outlook invitation cancellation worker",
+  "teamId": 1621766,
+  "autoActivate": false,
+  "scheduling": {
+    "type": "on-demand"
+  },
+  "modules": [
+    {
+      "id": 1,
+      "module": "scenario-service:StartSubscenario",
+      "version": 2,
+      "root": "main",
+      "config": {}
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicIfElse",
+      "version": 1,
+      "follows": 1,
+      "config": {}
+    },
+    {
+      "id": 3,
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "parent": {
+        "moduleId": 2,
+        "kind": "branch",
+        "index": 0,
+        "label": "Legacy registration",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(1.mode; emptystring))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{length(ifempty(1.eventId; emptystring))}}",
+              "b": "0",
+              "o": "number:equal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "status": "confirmed"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "microsoft-calendar:makeApiCall",
+      "version": 2,
+      "parent": {
+        "moduleId": 2,
+        "kind": "branch",
+        "index": 1,
+        "label": "Outlook registration",
+        "conditions": [
+          [
+            {
+              "a": "{{1.mode}}",
+              "b": "outlook",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{1.rowId}}",
+              "b": "^[0-9]+$",
+              "o": "text:pattern"
+            },
+            {
+              "a": "{{1.eventId}}",
+              "b": "^[A-Za-z0-9_+=/\\-]{20,2048}$",
+              "o": "text:pattern"
+            },
+            {
+              "a": "{{1.email}}",
+              "b": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+              "o": "text:pattern"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "parameters": {
+          "__IMTCONN__": 12030055
+        },
+        "mapper": {
+          "url": "/v1.0/me/events/{{encodeURL(1.eventId)}}",
+          "method": "GET"
+        }
+      }
+    },
+    {
+      "id": 18,
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "parent": {
+        "moduleId": 4,
+        "kind": "errorHandler"
+      },
+      "config": {
+        "mapper": {
+          "status": "error"
+        }
+      }
+    },
+    {
+      "id": 19,
+      "module": "builtin:Commit",
+      "version": 1,
+      "follows": 18,
+      "config": {}
+    },
+    {
+      "id": 5,
+      "module": "builtin:BasicIfElse",
+      "version": 1,
+      "follows": 4,
+      "config": {}
+    },
+    {
+      "id": 6,
+      "module": "microsoft-calendar:makeApiCall",
+      "version": 2,
+      "parent": {
+        "moduleId": 5,
+        "kind": "branch",
+        "index": 0,
+        "label": "Verified private invitation",
+        "conditions": [
+          [
+            {
+              "a": "{{4.statusCode}}",
+              "b": "200",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{4.body.id}}",
+              "b": "{{1.eventId}}",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{lower(4.body.organizer.emailAddress.address)}}",
+              "b": "REPLACE_WITH_ORGANIZER_EMAIL",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{length(4.body.attendees)}}",
+              "b": "1",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{lower(4.body.attendees[1].emailAddress.address)}}",
+              "b": "{{lower(1.email)}}",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{4.body.transactionId}}",
+              "b": "plan-t-webinar-20261110-{{1.rowId}}",
+              "o": "text:equal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "parameters": {
+          "__IMTCONN__": 12030055
+        },
+        "mapper": {
+          "url": "/v1.0/me/events/{{encodeURL(1.eventId)}}/cancel",
+          "body": {
+            "comment": "הרשמתך לוובינר חשיפת נבחרת המומחים של PLAN-T בוטלה בהתאם לבקשתך."
+          },
+          "method": "POST",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 20,
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "parent": {
+        "moduleId": 6,
+        "kind": "errorHandler"
+      },
+      "config": {
+        "mapper": {
+          "status": "error"
+        }
+      }
+    },
+    {
+      "id": 21,
+      "module": "builtin:Commit",
+      "version": 1,
+      "follows": 20,
+      "config": {}
+    },
+    {
+      "id": 7,
+      "module": "microsoft-calendar:makeApiCall",
+      "version": 2,
+      "follows": 6,
+      "config": {
+        "parameters": {
+          "__IMTCONN__": 12030055
+        },
+        "mapper": {
+          "url": "/v1.0/me/events/{{encodeURL(1.eventId)}}",
+          "method": "GET"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "parent": {
+        "moduleId": 7,
+        "kind": "errorHandler"
+      },
+      "config": {
+        "mapper": {
+          "status": "{{if(6.statusCode = 202 & contains(7.error.message; \"[404]\"); \"confirmed\"; \"error\")}}"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "module": "builtin:BasicIfElse",
+      "version": 1,
+      "follows": 7,
+      "config": {}
+    },
+    {
+      "id": 9,
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "parent": {
+        "moduleId": 8,
+        "kind": "branch",
+        "index": 0,
+        "label": "Calendar event cancelled",
+        "conditions": [
+          [
+            {
+              "a": "{{6.statusCode}}",
+              "b": "202",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{7.body.isCancelled}}",
+              "b": "true",
+              "o": "boolean:equal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "status": "confirmed"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "parent": {
+        "moduleId": 8,
+        "kind": "branch",
+        "index": 1,
+        "label": "Cancellation not confirmed"
+      },
+      "config": {
+        "mapper": {
+          "status": "error"
+        }
+      }
+    },
+    {
+      "id": 16,
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "parent": {
+        "moduleId": 5,
+        "kind": "branch",
+        "index": 1,
+        "label": "Event does not match registration"
+      },
+      "config": {
+        "mapper": {
+          "status": "error"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "module": "scenario-service:ReturnData",
+      "version": 2,
+      "parent": {
+        "moduleId": 2,
+        "kind": "branch",
+        "index": 2,
+        "label": "Missing or inconsistent invitation metadata"
+      },
+      "config": {
+        "mapper": {
+          "status": "error"
+        }
+      }
+    }
+  ],
+  "interface": {
+    "input": [
+      {
+        "name": "mode",
+        "type": "text"
+      },
+      {
+        "name": "eventId",
+        "type": "text"
+      },
+      {
+        "name": "rowId",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "email",
+        "type": "text"
+      }
+    ],
+    "output": [
+      {
+        "name": "status",
+        "type": "text"
+      }
+    ]
+  }
+}

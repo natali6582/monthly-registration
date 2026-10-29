@@ -460,11 +460,11 @@
           <div class="field"><label for="direct-phone">טלפון<span class="required">*</span></label><input id="direct-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" dir="ltr" maxlength="25" placeholder="מספר הטלפון שלכם" required aria-describedby="direct-phone-error"><p class="field-error" id="direct-phone-error" hidden></p></div>
           <div class="field"><label for="direct-email">מייל<span class="required">*</span></label><input id="direct-email" name="email" type="email" autocomplete="email" inputmode="email" dir="ltr" maxlength="254" placeholder="כתובת המייל שלכם" required aria-describedby="direct-email-error"><p class="field-error" id="direct-email-error" hidden></p></div>
         </div>
-        <p class="form-note">אחרי ההרשמה יישלח אליכם מייל עם קישור לוובינר וקובץ להוספת האירוע ליומן.</p>
+        <p class="form-note">אחרי ההרשמה יישלחו אליכם במייל אישור, קישור לוובינר ופרטי ההוספה ליומן.</p>
         <button class="primary" id="direct-submit" type="submit">הרשמה לאירוע</button>
       </form>
       <section id="direct-cancellation" hidden aria-labelledby="direct-cancel-title"><h2 id="direct-cancel-title">ביטול הרשמה לאירוע</h2><p>לביטול ההרשמה לאירוע ב־10.11.2026 בשעה 11:00, לחצו על הכפתור.</p><button class="primary" id="direct-cancel-button" type="button">אישור ביטול ההרשמה</button></section>
-      <section id="direct-success" class="next-step" hidden tabindex="-1"><div class="check" aria-hidden="true">✓</div><h2>ההרשמה הושלמה</h2><p>נשלח אליכם מייל אישור עם קישור לוובינר וקובץ להוספת האירוע ליומן.</p><a class="primary" id="direct-join" target="_blank" rel="noopener noreferrer">כניסה לוובינר ב־Zoom</a><a class="secondary calendar-download" id="direct-calendar" download="PLAN-T-10-11-2026.ics">הוספה ליומן Outlook או Google</a><p class="calendar-note">ייתכן שיידרש אישור להוספת האירוע ביומן שלכם.</p></section>
+      <section id="direct-success" class="next-step" hidden tabindex="-1"><div class="check" aria-hidden="true">✓</div><h2>ההרשמה הושלמה</h2><p id="direct-success-description">נשלח אליכם מייל אישור עם קישור לוובינר וקובץ להוספת האירוע ליומן.</p><a class="primary" id="direct-join" target="_blank" rel="noopener noreferrer">כניסה לוובינר ב־Zoom</a><a class="secondary calendar-download" id="direct-calendar" download="PLAN-T-10-11-2026.ics">הוספה ליומן Outlook או Google</a><p id="direct-calendar-note" class="calendar-note">ייתכן שיידרש אישור להוספת האירוע ביומן שלכם.</p></section>
       <p id="direct-feedback" class="submission-feedback" role="status" tabindex="-1" hidden></p>
     </div>
   </article>
@@ -515,13 +515,25 @@
     }
     if (message.type !== "plan-t:experts-direct:result" || event.origin !== bridge || message.requestId !== pending) return;
     unlock();
-    if(message.status === "registered" && typeof message.calendarIcs === "string" && message.calendarIcs.startsWith("BEGIN:VCALENDAR\r\n") && /^https:\/\/us06web\.zoom\.us\/j\/86023045044\?/.test(message.joinUrl || "")) {
+    const outlookInvite = message.deliveryMode === "outlook" && !Object.prototype.hasOwnProperty.call(message, "calendarIcs");
+    const legacyCalendar = message.deliveryMode === undefined && typeof message.calendarIcs === "string" && message.calendarIcs.startsWith("BEGIN:VCALENDAR\r\n");
+    if(message.status === "registered" && (outlookInvite || legacyCalendar) && /^https:\/\/us06web\.zoom\.us\/j\/86023045044\?/.test(message.joinUrl || "")) {
       form.hidden = true;
       document.getElementById("direct-join").href = message.joinUrl;
-      calendarObjectUrl = URL.createObjectURL(new Blob([message.calendarIcs],{type:"text/calendar;charset=utf-8"}));
-      document.getElementById("direct-calendar").href = calendarObjectUrl;
+      const calendarLink = document.getElementById("direct-calendar");
+      if(calendarObjectUrl) {URL.revokeObjectURL(calendarObjectUrl);calendarObjectUrl = undefined;}
+      calendarLink.removeAttribute("href");
+      calendarLink.hidden = outlookInvite;
+      document.getElementById("direct-calendar-note").hidden = outlookInvite;
+      document.getElementById("direct-success-description").textContent = outlookInvite
+        ? "נשלחו אליכם מייל אישור עם קישור לוובינר וזימון ליומן. פתחו את הזימון במייל ואשרו השתתפות."
+        : "נשלח אליכם מייל אישור עם קישור לוובינר וקובץ להוספת האירוע ליומן.";
+      if(legacyCalendar) {
+        calendarObjectUrl = URL.createObjectURL(new Blob([message.calendarIcs],{type:"text/calendar;charset=utf-8"}));
+        calendarLink.href = calendarObjectUrl;
+      }
       const success = document.getElementById("direct-success"); success.hidden = false; success.focus();
-    } else if(message.status === "cancelled") {document.getElementById("direct-cancellation").hidden = true; report("ההרשמה בוטלה בהצלחה. אם הוספתם את האירוע ליומן, יש להסיר אותו גם מהיומן שלכם.");}
+    } else if(message.status === "cancelled") {document.getElementById("direct-cancellation").hidden = true; report("ההרשמה לאירוע בוטלה.");}
     else if(message.status === "already_received") report("הפרטים כבר נקלטו. בדקו את הודעת האישור במייל. אם אינה מופיעה, פנו אל supportclient@plan-t.org.il.");
     else if(message.status === "email_error") report("הפרטים נקלטו, אך מייל האישור לא נשלח. פנו אל supportclient@plan-t.org.il לקבלת האישור.");
     else if(message.status === "invalid") report("לא ניתן להשלים את הפעולה. בדקו את הפרטים או פנו אל supportclient@plan-t.org.il.");
