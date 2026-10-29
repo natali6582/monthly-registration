@@ -1,0 +1,11 @@
+{
+  "scenarioId": 6823179,
+  "status": "active",
+  "lastEdit": "2026-10-29T15:19:52.732Z",
+  "boardId": "5106887275",
+  "groupId": "topics",
+  "mailConnection": 6649321,
+  "mondayConnection": 9828370,
+  "defaultFlowPreserved": true,
+  "webhookStoredInWixSecret": "PLAN_T_EXPERTS_DIRECT_INTAKE_URL"
+}

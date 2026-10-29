@@ -1,0 +1,67 @@
+{
+  "scenarioId": 6824104,
+  "scenarioUrl": "https://us2.make.com/1621766/scenarios/6824104",
+  "status": "active",
+  "lastEdit": "2026-10-29T15:25:09.977Z",
+  "boardId": "5099813594",
+  "groupId": "group_mm50r2qx",
+  "trainingBoardId": "5101093027",
+  "trainingItemId": "3302411216",
+  "hookId": 2998249,
+  "moduleCount": 31,
+  "mondayConnection": 9828370,
+  "mailConnection": 6649321,
+  "apiVersion": "2026-07",
+  "rawUtcParserIds": [
+    16,
+    17
+  ],
+  "registeredResponseGateId": 32,
+  "source": "monthly-training-direct",
+  "pendingStatusId": 0,
+  "registeredStatusId": 7,
+  "cancelledStatusId": 10,
+  "makeApiTested": true,
+  "registrationExecution": "3b4da9ab047d47f0a1e2765b15848deb",
+  "testRowId": "3318000432",
+  "duplicateExecution": "788ed2c26d54441bbc7b08def01a1648",
+  "repeatCancellationExecution": "06d9c9c480794f8083b6eaa1106e7c28",
+  "wixPublished": true,
+  "liveWixInstalled": true,
+  "calendarClientImportTested": false,
+  "runtimeInitializationRepair": {
+    "failedExecution": "12f354f1927741598140307dc6cb5762",
+    "operationsBeforeFailure": 0,
+    "change": "Replaced BasicRouter18 inside IfElse with BasicIfElse32",
+    "proof": "invalid-source HTTP400 followed by successful registration API test"
+  },
+  "mailCopyVerified": {
+    "subject": "אישור הרשמה להדרכה החודשית של  PLAN-T",
+    "htmlSpacing": "two nonbreaking spaces before PLAN-T",
+    "resent": false
+  },
+  "publicWebsiteTest": {
+    "url": "https://www.plan-t.org.il/monthlyregistration",
+    "registrationItemId": "3318094429",
+    "registrationExecution": "e13fe24476844bf6b2939c64c6ba0224",
+    "mailReceivedAtUtc": "2026-10-29T14:06:02Z",
+    "mailSubject": "אישור הרשמה להדרכה החודשית של  PLAN-T",
+    "zoomMeetingId": "83817891151",
+    "calendarDownloaded": true,
+    "calendlyNavigation": false,
+    "evidence": "production/verification/out_20261029_public_registration_02/"
+  },
+  "wixDeployment": {
+    "version": "out_20261029_monthly_direct_v2/run1",
+    "componentId": "#registrationHtml",
+    "componentIdVerifiedLive": true,
+    "threeFilesInstalledAndPublished": true,
+    "sharedRegistrationBackendUnchanged": true,
+    "newSecrets": [
+      "PLAN_T_MONTHLY_DIRECT_INTAKE_URL",
+      "PLAN_T_MONTHLY_DIRECT_CANCEL_URL"
+    ],
+    "existingSecretsUnchanged": 7,
+    "evidence": "production/wix/out_20261029_live_installed_01/"
+  }
+}
