@@ -1,0 +1,113 @@
+<!-- Optional direct flow. The legacy markup and script above remain unchanged. -->
+<style>
+  #direct-calendar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 58px;
+    margin-top: 16px;
+    padding: 16px 20px;
+    border: 2px solid #0879cf;
+    border-radius: 12px;
+    background: #eaf5fc;
+    color: #174f72;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+  }
+  #direct-calendar:hover { background: #dceffa; }
+  #direct-calendar:focus-visible { outline: 3px solid #174f72; outline-offset: 3px; }
+</style>
+<main id="direct-flow" hidden>
+  <article class="event-card" aria-labelledby="direct-title">
+    <header class="hero">
+      <div class="brand-row"><span class="eyebrow">אירוע חשיפה · אונליין</span><span class="brand" lang="en">PLAN T</span></div>
+      <h1 id="direct-title">הרשמה לאירוע חשיפת נבחרת המומחים של <bdi>PLAN T</bdi></h1>
+      <p class="intro">הרשמה אחת לאירוע. מלאו את הפרטים לקבלת אישור וקישור לוובינר במייל.</p>
+      <div class="event-details"><span>יום שלישי, <bdi>10.11.2026</bdi></span><span class="separator" aria-hidden="true"></span><span><bdi>11:00</bdi> · שעון ישראל</span></div>
+    </header>
+    <div class="card-body">
+      <form id="direct-registration-form" novalidate>
+        <div class="form-grid">
+          <div class="field field-wide"><label for="direct-name">שם מלא<span class="required">*</span></label><input id="direct-name" name="name" autocomplete="name" minlength="2" maxlength="100" placeholder="השם המלא שלכם" required aria-describedby="direct-name-error"><p class="field-error" id="direct-name-error" hidden></p></div>
+          <div class="field"><label for="direct-phone">טלפון<span class="required">*</span></label><input id="direct-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" dir="ltr" maxlength="25" placeholder="מספר הטלפון שלכם" required aria-describedby="direct-phone-error"><p class="field-error" id="direct-phone-error" hidden></p></div>
+          <div class="field"><label for="direct-email">מייל<span class="required">*</span></label><input id="direct-email" name="email" type="email" autocomplete="email" inputmode="email" dir="ltr" maxlength="254" placeholder="כתובת המייל שלכם" required aria-describedby="direct-email-error"><p class="field-error" id="direct-email-error" hidden></p></div>
+        </div>
+        <p class="form-note">אחרי ההרשמה יישלח אליכם מייל עם קישור לוובינר וקובץ להוספת האירוע ליומן.</p>
+        <button class="primary" id="direct-submit" type="submit">הרשמה לאירוע</button>
+      </form>
+      <section id="direct-cancellation" hidden aria-labelledby="direct-cancel-title"><h2 id="direct-cancel-title">ביטול הרשמה לאירוע</h2><p>לביטול ההרשמה לאירוע ב־10.11.2026 בשעה 11:00, לחצו על הכפתור.</p><button class="primary" id="direct-cancel-button" type="button">אישור ביטול ההרשמה</button></section>
+      <section id="direct-success" class="next-step" hidden tabindex="-1"><div class="check" aria-hidden="true">✓</div><h2>ההרשמה הושלמה</h2><p>נשלח אליכם מייל אישור עם קישור לוובינר וקובץ להוספת האירוע ליומן.</p><a class="primary" id="direct-join" target="_blank" rel="noopener noreferrer">כניסה לוובינר ב־Zoom</a><a class="secondary calendar-download" id="direct-calendar" download="PLAN-T-10-11-2026.ics">הוספה ליומן Outlook או Google</a><p class="calendar-note">ייתכן שיידרש אישור להוספת האירוע ביומן שלכם.</p></section>
+      <p id="direct-feedback" class="submission-feedback" role="status" tabindex="-1" hidden></p>
+    </div>
+  </article>
+</main>
+<script>
+(() => {
+  "use strict";
+  const origins = new Set(["https://www.plan-t.org.il", "https://plan-t.org.il", "https://lihi45-plan-t.editor.wix.com"]);
+  const panel = document.getElementById("direct-flow");
+  const form = document.getElementById("direct-registration-form");
+  const feedback = document.getElementById("direct-feedback");
+  const fields = Array.from(form.querySelectorAll("input"));
+  const submit = document.getElementById("direct-submit");
+  const cancel = document.getElementById("direct-cancel-button");
+  let bridge = null; let pending = null; let timer; let readyTimer; let calendarObjectUrl;
+  function announce() {
+    if (window.parent === window || bridge) return;
+    origins.forEach(origin => window.parent.postMessage({type:"plan-t:experts-direct:ready"}, origin));
+  }
+  function report(text) { feedback.textContent = text; feedback.hidden = false; feedback.focus(); }
+  function unlock() { clearTimeout(timer); pending = null; submit.disabled = false; cancel.disabled = false; submit.textContent = "הרשמה לאירוע"; }
+  function errorFor(field) {
+    const value = field.value.trim();
+    if (!value) return {name:"יש למלא שם מלא.",phone:"יש למלא מספר טלפון.",email:"יש למלא כתובת מייל."}[field.name];
+    if (field.name === "name" && (value.length < 2 || value.length > 100)) return "יש להזין שם בן 2 עד 100 תווים.";
+    if (field.name === "phone" && !/^\d{9,15}$/.test(value.replace(/[\s()+.\-]/g,""))) return "יש להזין מספר טלפון תקין, כולל קידומת.";
+    if (field.name === "email" && (value.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))) return "יש להזין כתובת מייל תקינה.";
+    return "";
+  }
+  function validate(field) { const text = errorFor(field); const error = document.getElementById(field.getAttribute("aria-describedby")); error.textContent = text; error.hidden = !text; field.setAttribute("aria-invalid",String(Boolean(text))); return !text; }
+  function send(type, data) {
+    if (!bridge || pending) return;
+    pending = crypto.randomUUID(); const requestId = pending;
+    submit.disabled = true; cancel.disabled = true; feedback.hidden = true; submit.textContent = "שליחת הפרטים…";
+    timer = setTimeout(() => { if(pending !== requestId) return; unlock(); report("לא התקבלה תשובה סופית. בדקו את המייל לפני ניסיון נוסף, או פנו אל supportclient@plan-t.org.il."); }, 45000);
+    window.parent.postMessage({ type, requestId, ...data }, bridge);
+  }
+  window.addEventListener("message", event => {
+    if (event.source !== window.parent || !origins.has(event.origin)) return;
+    const message = event.data;
+    if (!message || typeof message !== "object" || Array.isArray(message)) return;
+    if (message.type === "plan-t:experts-direct:mode" && message.mode === "direct") {
+      bridge = event.origin; clearInterval(readyTimer);
+      Array.from(document.body.children).filter(node => node.tagName === "MAIN" && node !== panel).forEach(node => {node.hidden = true;});
+      panel.hidden = false;
+      if(message.cancellation || message.invalidCancel) {form.hidden = true; document.getElementById("direct-cancellation").hidden = Boolean(message.invalidCancel); if(message.invalidCancel) report("קישור הביטול אינו תקין. פנו אל supportclient@plan-t.org.il.");}
+      return;
+    }
+    if (message.type !== "plan-t:experts-direct:result" || event.origin !== bridge || message.requestId !== pending) return;
+    unlock();
+    if(message.status === "registered" && typeof message.calendarIcs === "string" && message.calendarIcs.startsWith("BEGIN:VCALENDAR\r\n") && /^https:\/\/us06web\.zoom\.us\/j\/86023045044\?/.test(message.joinUrl || "")) {
+      form.hidden = true;
+      document.getElementById("direct-join").href = message.joinUrl;
+      calendarObjectUrl = URL.createObjectURL(new Blob([message.calendarIcs],{type:"text/calendar;charset=utf-8"}));
+      document.getElementById("direct-calendar").href = calendarObjectUrl;
+      const success = document.getElementById("direct-success"); success.hidden = false; success.focus();
+    } else if(message.status === "cancelled") {document.getElementById("direct-cancellation").hidden = true; report("ההרשמה בוטלה בהצלחה. אם הוספתם את האירוע ליומן, יש להסיר אותו גם מהיומן שלכם.");}
+    else if(message.status === "already_received") report("הפרטים כבר נקלטו. בדקו את הודעת האישור במייל. אם אינה מופיעה, פנו אל supportclient@plan-t.org.il.");
+    else if(message.status === "email_error") report("הפרטים נקלטו, אך מייל האישור לא נשלח. פנו אל supportclient@plan-t.org.il לקבלת האישור.");
+    else if(message.status === "invalid") report("לא ניתן להשלים את הפעולה. בדקו את הפרטים או פנו אל supportclient@plan-t.org.il.");
+    else report("לא התקבלה תשובה סופית. בדקו את המייל לפני ניסיון נוסף, או פנו אל supportclient@plan-t.org.il.");
+  });
+  fields.forEach(field => field.addEventListener("input",()=>{if(field.getAttribute("aria-invalid")==="true")validate(field);}));
+  form.addEventListener("submit",event=>{event.preventDefault();const invalid=fields.filter(field=>!validate(field));if(invalid.length){invalid[0].focus();return;}send("plan-t:experts-direct:submit",{name:fields[0].value.trim(),phone:fields[1].value.trim(),email:fields[2].value.trim().toLowerCase()});});
+  cancel.addEventListener("click",()=>send("plan-t:experts-direct:cancel",{}));
+  announce();let attempts=0;readyTimer=setInterval(()=>{announce();if(++attempts>=30)clearInterval(readyTimer);},1000);
+  window.addEventListener("pagehide",()=>{clearTimeout(timer);clearInterval(readyTimer);if(calendarObjectUrl)URL.revokeObjectURL(calendarObjectUrl);});
+})();
+</script>

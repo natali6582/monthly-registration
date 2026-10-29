@@ -1,0 +1,632 @@
+{
+  "name": "PLAN T | Webinar direct registration cancellation | TEST COPY",
+  "teamId": 1621766,
+  "autoActivate": false,
+  "scheduling": {
+    "type": "immediately"
+  },
+  "modules": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "label": "Private cancellation request",
+      "root": "main",
+      "config": {
+        "parameters": {
+          "hook": 2997926
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "label": "Validate token hash",
+      "follows": 1,
+      "config": {}
+    },
+    {
+      "id": 3,
+      "module": "monday:ExecuteGraphQLQueryV2",
+      "version": 2,
+      "label": "Find registration in isolated board",
+      "parent": {
+        "moduleId": 2,
+        "kind": "route",
+        "index": 0
+      },
+      "filter": {
+        "name": "64 lowercase hex characters",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(1.tokenHash; emptystring))}}",
+              "b": "64",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{length(replace(ifempty(1.tokenHash; emptystring); \"/[0-9a-f]/g\"; emptystring))}}",
+              "b": "0",
+              "o": "number:equal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "parameters": {
+          "__IMTCONN__": 9828370
+        },
+        "mapper": {
+          "method": "POST",
+          "queryBody": "query FindDirectRegistration($token: String!) { items_page_by_column_values(board_id:5106887275, limit:2, columns:[{column_id:\"cancel_token_hash\",column_values:[$token]}]) { items { id board { id } group { id } status: column_values(ids:[\"registration_status\"]) { ... on StatusValue { index } } token: column_values(ids:[\"cancel_token_hash\"]) { text } } } }",
+          "variables": {
+            "token": "{{1.tokenHash}}"
+          },
+          "apiVersion": "2026-07",
+          "variablesDataSource": "object"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Lookup transport error",
+      "parent": {
+        "moduleId": 3,
+        "kind": "errorHandler"
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"error\"}",
+          "status": 500,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 11,
+      "module": "builtin:Ignore",
+      "version": 1,
+      "label": "End lookup error path",
+      "follows": 6,
+      "config": {}
+    },
+    {
+      "id": 5,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "label": "Inspect isolated registration",
+      "follows": 3,
+      "config": {}
+    },
+    {
+      "id": 7,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Already cancelled",
+      "parent": {
+        "moduleId": 5,
+        "kind": "route",
+        "index": 0
+      },
+      "filter": {
+        "name": "Unique record already cancelled",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(3.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{length(ifempty(3.body.data.items_page_by_column_values.items; emptyarray))}}",
+              "b": "1",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].board.id}}",
+              "b": "5106887275",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].group.id}}",
+              "b": "topics",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].token[1].text}}",
+              "b": "{{1.tokenHash}}",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].id}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{ifempty(3.body.data.items_page_by_column_values.items[1].status[1].index; -1)}}",
+              "b": "2",
+              "o": "number:equal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"cancelled\"}",
+          "status": 200,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 8,
+      "module": "monday:ExecuteGraphQLQueryV2",
+      "version": 2,
+      "label": "Cancel isolated registration",
+      "parent": {
+        "moduleId": 5,
+        "kind": "route",
+        "index": 1
+      },
+      "filter": {
+        "name": "Unique matching record needs cancellation",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(3.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{length(ifempty(3.body.data.items_page_by_column_values.items; emptyarray))}}",
+              "b": "1",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].board.id}}",
+              "b": "5106887275",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].group.id}}",
+              "b": "topics",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].token[1].text}}",
+              "b": "{{1.tokenHash}}",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].id}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{ifempty(3.body.data.items_page_by_column_values.items[1].status[1].index; -1)}}",
+              "b": "2",
+              "o": "number:notequal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "parameters": {
+          "__IMTCONN__": 9828370
+        },
+        "mapper": {
+          "method": "POST",
+          "queryBody": "mutation CancelDirectRegistration($item: ID!) { change_multiple_column_values(board_id:5106887275, item_id:$item, column_values:\"{\\\"registration_status\\\":{\\\"index\\\":2}}\") { id board { id } group { id } status: column_values(ids:[\"registration_status\"]) { ... on StatusValue { index } } } }",
+          "variables": {
+            "item": "{{3.body.data.items_page_by_column_values.items[1].id}}"
+          },
+          "apiVersion": "2026-07",
+          "variablesDataSource": "object"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Update transport error",
+      "parent": {
+        "moduleId": 8,
+        "kind": "errorHandler"
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"error\"}",
+          "status": 500,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 16,
+      "module": "builtin:Ignore",
+      "version": 1,
+      "label": "End update error path",
+      "follows": 13,
+      "config": {}
+    },
+    {
+      "id": 12,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "label": "Verify cancellation write",
+      "follows": 8,
+      "config": {}
+    },
+    {
+      "id": 14,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Cancellation confirmed",
+      "parent": {
+        "moduleId": 12,
+        "kind": "route",
+        "index": 0
+      },
+      "filter": {
+        "name": "Returned record and status verified",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(8.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{8.body.data.change_multiple_column_values.id}}",
+              "b": "{{3.body.data.items_page_by_column_values.items[1].id}}",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{8.body.data.change_multiple_column_values.board.id}}",
+              "b": "5106887275",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{8.body.data.change_multiple_column_values.group.id}}",
+              "b": "topics",
+              "o": "text:equal"
+            },
+            {
+              "a": "{{ifempty(8.body.data.change_multiple_column_values.status[1].index; -1)}}",
+              "b": "2",
+              "o": "number:equal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"cancelled\"}",
+          "status": 200,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 15,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Cancellation verification failed",
+      "parent": {
+        "moduleId": 12,
+        "kind": "route",
+        "index": 1
+      },
+      "filter": {
+        "name": "Write response not verified",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(8.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:greater"
+            }
+          ],
+          [
+            {
+              "a": "{{8.body.data.change_multiple_column_values.id}}",
+              "o": "notexist"
+            }
+          ],
+          [
+            {
+              "a": "{{8.body.data.change_multiple_column_values.id}}",
+              "b": "{{3.body.data.items_page_by_column_values.items[1].id}}",
+              "o": "text:notequal"
+            }
+          ],
+          [
+            {
+              "a": "{{8.body.data.change_multiple_column_values.board.id}}",
+              "b": "5106887275",
+              "o": "text:notequal"
+            }
+          ],
+          [
+            {
+              "a": "{{8.body.data.change_multiple_column_values.group.id}}",
+              "b": "topics",
+              "o": "text:notequal"
+            }
+          ],
+          [
+            {
+              "a": "{{ifempty(8.body.data.change_multiple_column_values.status[1].index; -1)}}",
+              "b": "2",
+              "o": "number:notequal"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"error\"}",
+          "status": 500,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 9,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Registration not found or ambiguous",
+      "parent": {
+        "moduleId": 5,
+        "kind": "route",
+        "index": 2
+      },
+      "filter": {
+        "name": "No unique isolated registration",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(3.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{length(ifempty(3.body.data.items_page_by_column_values.items; emptyarray))}}",
+              "b": "1",
+              "o": "number:notequal"
+            }
+          ],
+          [
+            {
+              "a": "{{length(ifempty(3.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].board.id}}",
+              "b": "5106887275",
+              "o": "text:notequal"
+            }
+          ],
+          [
+            {
+              "a": "{{length(ifempty(3.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].group.id}}",
+              "b": "topics",
+              "o": "text:notequal"
+            }
+          ],
+          [
+            {
+              "a": "{{length(ifempty(3.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].token[1].text}}",
+              "b": "{{1.tokenHash}}",
+              "o": "text:notequal"
+            }
+          ],
+          [
+            {
+              "a": "{{length(ifempty(3.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:equal"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values}}",
+              "o": "exist"
+            },
+            {
+              "a": "{{3.body.data.items_page_by_column_values.items[1].id}}",
+              "o": "notexist"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"invalid\"}",
+          "status": 400,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 10,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Lookup response error",
+      "parent": {
+        "moduleId": 5,
+        "kind": "route",
+        "index": 3
+      },
+      "filter": {
+        "name": "GraphQL lookup error",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(3.body.errors; emptyarray))}}",
+              "b": "0",
+              "o": "number:greater"
+            }
+          ],
+          [
+            {
+              "a": "{{3.body.data.items_page_by_column_values}}",
+              "o": "notexist"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"error\"}",
+          "status": 500,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "label": "Invalid token response",
+      "parent": {
+        "moduleId": 2,
+        "kind": "route",
+        "index": 1
+      },
+      "filter": {
+        "name": "Invalid token format",
+        "conditions": [
+          [
+            {
+              "a": "{{length(ifempty(1.tokenHash; emptystring))}}",
+              "b": "64",
+              "o": "number:notequal"
+            }
+          ],
+          [
+            {
+              "a": "{{length(replace(ifempty(1.tokenHash; emptystring); \"/[0-9a-f]/g\"; emptystring))}}",
+              "b": "0",
+              "o": "number:greater"
+            }
+          ]
+        ]
+      },
+      "config": {
+        "mapper": {
+          "body": "{\"status\":\"invalid\"}",
+          "status": 400,
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
